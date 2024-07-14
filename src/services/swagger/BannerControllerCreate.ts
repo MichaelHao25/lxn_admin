@@ -2,12 +2,12 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 创建一个新的产品 POST /api/v1/product-list */
-export async function ProductListControllerCreate(
-  body: API.CreateProductListDto,
+/** 此处后端没有提供注释 POST /api/v1/banner */
+export async function BannerControllerCreate(
+  body: API.CreateBannerDto,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/api/v1/product-list', {
+  return request<any>('/api/v1/banner', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

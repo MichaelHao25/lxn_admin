@@ -1,58 +1,168 @@
 declare namespace API {
-  type CreateNewsListDto = {
+  type AdControllerFindAllParams = {
+    /** Ad 类型 */
+    type?: 'Home_Ad_1' | 'Home_Ad_2';
+    /** 当前页 */
+    current?: number;
+    /** 每一页的数量 */
+    pageSize?: number;
+  };
+
+  type AdControllerFindOneParams = {
+    _id: string;
+  };
+
+  type AdControllerRemoveParams = {
+    _id: string;
+  };
+
+  type AdControllerUpdateParams = {
+    _id: string;
+  };
+
+  type BannerControllerFindAllParams = {
+    type?: 'Home_Banner_1' | 'Home_Banner_2';
+    /** 当前页 */
+    current?: number;
+    /** 每一页的数量 */
+    pageSize?: number;
+  };
+
+  type BannerControllerFindOneParams = {
+    _id: string;
+  };
+
+  type BannerControllerRemoveParams = {
+    _id: string;
+  };
+
+  type BannerControllerUpdateParams = {
+    _id: string;
+  };
+
+  type ContactUsControllerFindAllParams = {
+    /** id */
+    _id?: string;
+    /** 来源 */
+    origin?: string;
+    /** 当前页 */
+    current?: number;
+    /** 每一页的数量 */
+    pageSize?: number;
+  };
+
+  type ContactUsControllerFindOneParams = {
+    _id: string;
+  };
+
+  type ContactUsControllerRemoveParams = {
+    _id: string;
+  };
+
+  type ContactUsControllerUpdateParams = {
+    _id: string;
+  };
+
+  type CreateAdDto = {
+    /** 类型 */
+    type: 'Home_Ad_1' | 'Home_Ad_2';
+    /** 标题 */
+    title: string;
+    /** 描述 */
+    description: string;
+    /** url */
+    url: string;
+    /** 背景颜色 只能是 */
+    backgroundColor?: string;
+  };
+
+  type CreateBannerDto = {
+    /** 类型 */
+    type: 'Home_Banner_1' | 'Home_Banner_2';
+    title?: string;
+    description?: string;
+    url: string;
+  };
+
+  type CreateContactUsDto = {
+    origin: string;
+    company: string;
+    name: string;
+    tel: string;
+    understandType: string;
+    scopeOfAuthority: string;
+  };
+
+  type CreateLabelDto = {
+    /** 类型名称 */
+    title: string;
+  };
+
+  type CreateNewsDto = {
     /** 类型id */
-    typeId: string;
+    type?: string;
+    label: string[];
     /** 产品标题 */
     title: string;
     /** 产品主图 */
     mainPicture: string;
-    /** 详情首页上的图片 */
-    detailsPicture: string;
     /** 产品描述 */
     description: string;
     /** 产品详情 */
     details: string;
   };
 
+  type CreatePageDto = {};
+
   type CreateProductAttachmentDto = {
     /** 附件名称 */
     name: string;
     /** 附件所属产品id */
-    productList_id: string;
+    product_id: string;
     /** 附件下载地址 */
     url: string;
     /** 顺序(越大越靠前) */
     order?: number;
   };
 
-  type CreateProductListDto = {
+  type CreateProductDto = {
     /** 类型id */
-    typeId: string;
+    type: string[];
+    /** 产品标签 */
+    label: string[];
     /** 产品标题 */
     title: string;
     /** 产品主图 */
     mainPicture: string;
-    /** banner 图 */
-    banner: string[];
     /** 产品描述 */
     description: string;
-    /** 产品详情 */
-    details: string;
+    /** 上线时间 */
+    releaseDate: string;
+    /** 总集数 */
+    totalEpisodes: string;
+    /** 时长 */
+    duration: string;
+    /** 视频方向 */
+    videoDirection: string;
+    /** 授权信息 - 授权性质 */
+    authorizationInformation_property: '独家' | '非独家' | '不限';
+    /** 授权信息 -- 首发平台 */
+    authorizationInformation_firstLaunchPlatform: string;
+    /** 授权信息 -- 范围 */
+    authorizationInformation_scope: '中国大陆' | '海外（含港澳台）' | '全球' | '不限';
+    /** 授权信息 -- 变现方式 */
+    authorizationInformation_monetizationMethods: '仅用于付费短剧' | '仅用于免费短剧' | '不限';
+    /** 试看地址 */
+    pilotVideoAddress: string;
     /** 顺序(越大越靠前) */
     order?: number;
   };
 
-  type CreateProductTypeDto = {
+  type CreateTypeDto = {
     /** 父级id(如果为空的话就是一级分类) */
     parent?: string;
     /** 类型名称 */
-    typeName: string;
-  };
-
-  type CreateSiteMessageDto = {
-    nickname: string;
-    tel: string;
-    message: string;
+    title: string;
   };
 
   type CreateUserDto = {
@@ -60,27 +170,59 @@ declare namespace API {
     password: string;
   };
 
-  type NewsListControllerFindAllParams = {
+  type LabelControllerFindAllParams = {
+    /** 当前页 */
+    current?: number;
+    /** 每一页的数量 */
+    pageSize?: number;
+  };
+
+  type LabelControllerFindOneParams = {
+    _id: string;
+  };
+
+  type LabelControllerRemoveParams = {
+    _id: string;
+  };
+
+  type LabelControllerUpdateParams = {
+    _id: string;
+  };
+
+  type NewsControllerFindAllParams = {
     /** 类型id */
-    typeId?: string;
+    type?: string;
     /** 产品标题 */
     title?: string;
+    label?: string;
     /** 当前页 */
-    current: number;
+    current?: number;
     /** 每一页的数量 */
-    pageSize: number;
+    pageSize?: number;
   };
 
-  type NewsListControllerFindOneParams = {
+  type NewsControllerFindOneParams = {
     _id: string;
   };
 
-  type NewsListControllerRemoveParams = {
+  type NewsControllerRemoveParams = {
     _id: string;
   };
 
-  type NewsListControllerUpdateParams = {
+  type NewsControllerUpdateParams = {
     _id: string;
+  };
+
+  type PageControllerFindOneParams = {
+    id: string;
+  };
+
+  type PageControllerRemoveParams = {
+    id: string;
+  };
+
+  type PageControllerUpdateParams = {
+    id: string;
   };
 
   type ProductAttachmentControllerFindAllParams = {
@@ -89,110 +231,150 @@ declare namespace API {
     /** 所属类型 id */
     typeId?: string;
     /** 当前页 */
-    current: number;
+    current?: number;
     /** 每一页的数量 */
-    pageSize: number;
+    pageSize?: number;
   };
 
   type ProductAttachmentControllerRemoveParams = {
     _id: string;
   };
 
-  type ProductListControllerFindAllParams = {
+  type ProductControllerFindAllParams = {
     /** 类型id */
-    typeId?: string;
+    type?: string;
     /** 产品标题 */
     title?: string;
+    /** 标签id */
+    label?: string;
     /** 当前页 */
-    current: number;
+    current?: number;
     /** 每一页的数量 */
-    pageSize: number;
+    pageSize?: number;
   };
 
-  type ProductListControllerFindOneParams = {
+  type ProductControllerFindOneParams = {
     _id: string;
   };
 
-  type ProductListControllerRemoveParams = {
+  type ProductControllerRemoveParams = {
     _id: string;
   };
 
-  type ProductListControllerUpdateParams = {
+  type ProductControllerUpdateParams = {
     _id: string;
   };
 
-  type ProductTypeControllerFindAllParams = {
+  type TypeControllerFindAllParams = {
     /** 一级分类的名称 */
-    type?: 'product' | 'news';
+    type?: string;
+    /** 当前页 */
+    current?: number;
+    /** 每一页的数量 */
+    pageSize?: number;
   };
 
-  type ProductTypeControllerFindOneParams = {
+  type TypeControllerFindOneParams = {
     _id: string;
   };
 
-  type ProductTypeControllerRemoveParams = {
+  type TypeControllerRemoveParams = {
     _id: string;
   };
 
-  type ProductTypeControllerUpdateParams = {
+  type TypeControllerUpdateParams = {
     _id: string;
   };
 
-  type SiteMessageControllerFindOneParams = {
-    _id: string;
+  type UpdateAdDto = {
+    /** 类型 */
+    type?: 'Home_Ad_1' | 'Home_Ad_2';
+    /** 标题 */
+    title?: string;
+    /** 描述 */
+    description?: string;
+    /** url */
+    url?: string;
+    /** 背景颜色 只能是 */
+    backgroundColor?: string;
   };
 
-  type SiteMessageControllerRemoveParams = {
-    _id: string;
+  type UpdateBannerDto = {
+    /** 类型 */
+    type?: 'Home_Banner_1' | 'Home_Banner_2';
+    title?: string;
+    description?: string;
+    url?: string;
   };
 
-  type SiteMessageControllerUpdateParams = {
-    _id: string;
+  type UpdateContactUsDto = {
+    origin?: string;
+    company?: string;
+    name?: string;
+    tel?: string;
+    understandType?: string;
+    scopeOfAuthority?: string;
   };
 
-  type UpdateNewsListDto = {
+  type UpdateLabelDto = {
+    /** 类型名称 */
+    title?: string;
+  };
+
+  type UpdateNewsDto = {
     /** 类型id */
-    typeId?: string;
+    type?: string;
+    label?: string[];
     /** 产品标题 */
     title?: string;
     /** 产品主图 */
     mainPicture?: string;
-    /** 详情首页上的图片 */
-    detailsPicture?: string;
     /** 产品描述 */
     description?: string;
     /** 产品详情 */
     details?: string;
   };
 
-  type UpdateProductListDto = {
+  type UpdatePageDto = {};
+
+  type UpdateProductDto = {
     /** 类型id */
-    typeId?: string;
+    type?: string[];
+    /** 产品标签 */
+    label?: string[];
     /** 产品标题 */
     title?: string;
     /** 产品主图 */
     mainPicture?: string;
-    /** banner 图 */
-    banner?: string[];
     /** 产品描述 */
     description?: string;
-    /** 产品详情 */
-    details?: string;
+    /** 上线时间 */
+    releaseDate?: string;
+    /** 总集数 */
+    totalEpisodes?: string;
+    /** 时长 */
+    duration?: string;
+    /** 视频方向 */
+    videoDirection?: string;
+    /** 授权信息 - 授权性质 */
+    authorizationInformation_property?: '独家' | '非独家' | '不限';
+    /** 授权信息 -- 首发平台 */
+    authorizationInformation_firstLaunchPlatform?: string;
+    /** 授权信息 -- 范围 */
+    authorizationInformation_scope?: '中国大陆' | '海外（含港澳台）' | '全球' | '不限';
+    /** 授权信息 -- 变现方式 */
+    authorizationInformation_monetizationMethods?: '仅用于付费短剧' | '仅用于免费短剧' | '不限';
+    /** 试看地址 */
+    pilotVideoAddress?: string;
     /** 顺序(越大越靠前) */
     order?: number;
   };
 
-  type UpdateProductTypeDto = {
+  type UpdateTypeDto = {
     /** 父级id(如果为空的话就是一级分类) */
     parent?: string;
     /** 类型名称 */
-    typeName?: string;
-  };
-
-  type UpdateSiteMessageDto = {
-    nickname?: string;
-    tel?: string;
-    message?: string;
+    title?: string;
   };
 
   type UpdateUserDto = {

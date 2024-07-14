@@ -2,12 +2,12 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 创建一个新的类型 POST /api/v1/product-type */
-export async function ProductTypeControllerCreate(
-  body: API.CreateProductTypeDto,
+/** 创建一个新的产品 POST /api/v1/news */
+export async function NewsControllerCreate(
+  body: API.CreateNewsDto,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/api/v1/product-type', {
+  return request<any>('/api/v1/news', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

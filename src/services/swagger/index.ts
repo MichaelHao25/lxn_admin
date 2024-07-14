@@ -3,11 +3,16 @@
 // API 更新时间：
 // API 唯一标识：
 import * as AppControllerGetHello from './AppControllerGetHello';
-import * as SiteMessageControllerFindAll from './SiteMessageControllerFindAll';
-import * as SiteMessageControllerCreate from './SiteMessageControllerCreate';
-import * as SiteMessageControllerFindOne from './SiteMessageControllerFindOne';
-import * as SiteMessageControllerRemove from './SiteMessageControllerRemove';
-import * as SiteMessageControllerUpdate from './SiteMessageControllerUpdate';
+import * as AdControllerFindAll from './AdControllerFindAll';
+import * as AdControllerCreate from './AdControllerCreate';
+import * as AdControllerFindOne from './AdControllerFindOne';
+import * as AdControllerRemove from './AdControllerRemove';
+import * as AdControllerUpdate from './AdControllerUpdate';
+import * as ContactUsControllerFindAll from './ContactUsControllerFindAll';
+import * as ContactUsControllerCreate from './ContactUsControllerCreate';
+import * as ContactUsControllerFindOne from './ContactUsControllerFindOne';
+import * as ContactUsControllerRemove from './ContactUsControllerRemove';
+import * as ContactUsControllerUpdate from './ContactUsControllerUpdate';
 import * as UserControllerLogout from './UserControllerLogout';
 import * as UserControllerCreate from './UserControllerCreate';
 import * as UserControllerLogin from './UserControllerLogin';
@@ -17,31 +22,51 @@ import * as UserControllerRemove from './UserControllerRemove';
 import * as UserControllerUpdate from './UserControllerUpdate';
 import * as UploadControllerFindOne from './UploadControllerFindOne';
 import * as UploadControllerUpload from './UploadControllerUpload';
-import * as ProductTypeControllerFindAll from './ProductTypeControllerFindAll';
-import * as ProductTypeControllerCreate from './ProductTypeControllerCreate';
-import * as ProductTypeControllerFindOne from './ProductTypeControllerFindOne';
-import * as ProductTypeControllerRemove from './ProductTypeControllerRemove';
-import * as ProductTypeControllerUpdate from './ProductTypeControllerUpdate';
-import * as ProductListControllerFindAll from './ProductListControllerFindAll';
-import * as ProductListControllerCreate from './ProductListControllerCreate';
-import * as ProductListControllerFindOne from './ProductListControllerFindOne';
-import * as ProductListControllerRemove from './ProductListControllerRemove';
-import * as ProductListControllerUpdate from './ProductListControllerUpdate';
+import * as TypeControllerFindAll from './TypeControllerFindAll';
+import * as TypeControllerCreate from './TypeControllerCreate';
+import * as TypeControllerFindOne from './TypeControllerFindOne';
+import * as TypeControllerRemove from './TypeControllerRemove';
+import * as TypeControllerUpdate from './TypeControllerUpdate';
+import * as ProductControllerFindAll from './ProductControllerFindAll';
+import * as ProductControllerCreate from './ProductControllerCreate';
+import * as ProductControllerFindOne from './ProductControllerFindOne';
+import * as ProductControllerRemove from './ProductControllerRemove';
+import * as ProductControllerUpdate from './ProductControllerUpdate';
+import * as LabelControllerFindAll from './LabelControllerFindAll';
+import * as LabelControllerCreate from './LabelControllerCreate';
+import * as LabelControllerFindOne from './LabelControllerFindOne';
+import * as LabelControllerRemove from './LabelControllerRemove';
+import * as LabelControllerUpdate from './LabelControllerUpdate';
 import * as ProductAttachmentControllerFindAll from './ProductAttachmentControllerFindAll';
 import * as ProductAttachmentControllerCreate from './ProductAttachmentControllerCreate';
 import * as ProductAttachmentControllerRemove from './ProductAttachmentControllerRemove';
-import * as NewsListControllerFindAll from './NewsListControllerFindAll';
-import * as NewsListControllerCreate from './NewsListControllerCreate';
-import * as NewsListControllerFindOne from './NewsListControllerFindOne';
-import * as NewsListControllerRemove from './NewsListControllerRemove';
-import * as NewsListControllerUpdate from './NewsListControllerUpdate';
+import * as NewsControllerFindAll from './NewsControllerFindAll';
+import * as NewsControllerCreate from './NewsControllerCreate';
+import * as NewsControllerFindOne from './NewsControllerFindOne';
+import * as NewsControllerRemove from './NewsControllerRemove';
+import * as NewsControllerUpdate from './NewsControllerUpdate';
+import * as BannerControllerFindAll from './BannerControllerFindAll';
+import * as BannerControllerCreate from './BannerControllerCreate';
+import * as BannerControllerFindOne from './BannerControllerFindOne';
+import * as BannerControllerRemove from './BannerControllerRemove';
+import * as BannerControllerUpdate from './BannerControllerUpdate';
+import * as PageControllerCreate from './PageControllerCreate';
+import * as PageControllerFindAll from './PageControllerFindAll';
+import * as PageControllerFindOne from './PageControllerFindOne';
+import * as PageControllerRemove from './PageControllerRemove';
+import * as PageControllerUpdate from './PageControllerUpdate';
 export default {
   AppControllerGetHello,
-  SiteMessageControllerFindAll,
-  SiteMessageControllerCreate,
-  SiteMessageControllerFindOne,
-  SiteMessageControllerRemove,
-  SiteMessageControllerUpdate,
+  AdControllerFindAll,
+  AdControllerCreate,
+  AdControllerFindOne,
+  AdControllerRemove,
+  AdControllerUpdate,
+  ContactUsControllerFindAll,
+  ContactUsControllerCreate,
+  ContactUsControllerFindOne,
+  ContactUsControllerRemove,
+  ContactUsControllerUpdate,
   UserControllerLogout,
   UserControllerCreate,
   UserControllerLogin,
@@ -51,22 +76,37 @@ export default {
   UserControllerUpdate,
   UploadControllerFindOne,
   UploadControllerUpload,
-  ProductTypeControllerFindAll,
-  ProductTypeControllerCreate,
-  ProductTypeControllerFindOne,
-  ProductTypeControllerRemove,
-  ProductTypeControllerUpdate,
-  ProductListControllerFindAll,
-  ProductListControllerCreate,
-  ProductListControllerFindOne,
-  ProductListControllerRemove,
-  ProductListControllerUpdate,
+  TypeControllerFindAll,
+  TypeControllerCreate,
+  TypeControllerFindOne,
+  TypeControllerRemove,
+  TypeControllerUpdate,
+  ProductControllerFindAll,
+  ProductControllerCreate,
+  ProductControllerFindOne,
+  ProductControllerRemove,
+  ProductControllerUpdate,
+  LabelControllerFindAll,
+  LabelControllerCreate,
+  LabelControllerFindOne,
+  LabelControllerRemove,
+  LabelControllerUpdate,
   ProductAttachmentControllerFindAll,
   ProductAttachmentControllerCreate,
   ProductAttachmentControllerRemove,
-  NewsListControllerFindAll,
-  NewsListControllerCreate,
-  NewsListControllerFindOne,
-  NewsListControllerRemove,
-  NewsListControllerUpdate,
+  NewsControllerFindAll,
+  NewsControllerCreate,
+  NewsControllerFindOne,
+  NewsControllerRemove,
+  NewsControllerUpdate,
+  BannerControllerFindAll,
+  BannerControllerCreate,
+  BannerControllerFindOne,
+  BannerControllerRemove,
+  BannerControllerUpdate,
+  PageControllerCreate,
+  PageControllerFindAll,
+  PageControllerFindOne,
+  PageControllerRemove,
+  PageControllerUpdate,
 };

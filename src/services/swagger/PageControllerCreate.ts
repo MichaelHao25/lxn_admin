@@ -2,12 +2,12 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 创建一条站内信 POST /api/v1/site-message */
-export async function SiteMessageControllerCreate(
-  body: API.CreateSiteMessageDto,
+/** 此处后端没有提供注释 POST /api/v1/page */
+export async function PageControllerCreate(
+  body: API.CreatePageDto,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/api/v1/site-message', {
+  return request<string>('/api/v1/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

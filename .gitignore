@@ -2,4 +2,3 @@ node_modules
 .umi/
 dist.zip
 dist/*
-dist/*
