@@ -1,4 +1,4 @@
-import env from "@/env";
+import { address } from "@/runtime";
 import getToken from "@/utils/getToken";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload, UploadProps, message } from "antd";
@@ -12,7 +12,7 @@ export const getUrl = (item: any) => {
 export const getUploadProps = (): UploadProps => {
   const props: UploadProps = {
     name: "file",
-    action: `${env.address}/api/v1/upload`,
+    action: `${address}/api/v1/upload`,
     headers: {},
     onChange(info) {
       //   if (info.file.status !== "uploading") {

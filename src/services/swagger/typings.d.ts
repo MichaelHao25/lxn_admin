@@ -171,6 +171,7 @@ declare namespace API {
   };
 
   type LabelControllerFindAllParams = {
+    title: string;
     /** 当前页 */
     current?: number;
     /** 每一页的数量 */
@@ -267,7 +268,8 @@ declare namespace API {
 
   type TypeControllerFindAllParams = {
     /** 一级分类的名称 */
-    type?: string;
+    parent?: string;
+    title?: string;
     /** 当前页 */
     current?: number;
     /** 每一页的数量 */

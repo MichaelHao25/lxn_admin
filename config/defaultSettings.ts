@@ -1,4 +1,5 @@
 import { ProLayoutProps } from "@ant-design/pro-components";
+import { companyName } from "../src/runtime";
 
 /**
  * @name
@@ -15,7 +16,7 @@ const Settings: ProLayoutProps & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: "泽连工控",
+  title: companyName,
   pwa: true,
   logo: "/admin/logo.png",
   iconfontUrl: "",

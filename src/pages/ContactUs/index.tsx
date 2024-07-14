@@ -1,17 +1,13 @@
 import { PageContainer } from "@ant-design/pro-components";
 import { useModel } from "@umijs/max";
 import { Card, Popconfirm, message, theme } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { ProductAttachmentControllerFindAll } from "@/services/swagger/ProductAttachmentControllerFindAll";
-import { ProductAttachmentControllerRemove } from "@/services/swagger/ProductAttachmentControllerRemove";
-import { ProductTypeControllerFindAll } from "@/services/swagger/ProductTypeControllerFindAll";
-import { PlusOutlined } from "@ant-design/icons";
+import { ContactUsControllerFindAll } from "@/services/swagger/ContactUsControllerFindAll";
+import { ContactUsControllerRemove } from "@/services/swagger/ContactUsControllerRemove";
 import type { ActionType, ProColumns } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
-import { Button } from "antd";
 import { useRef } from "react";
-import Add from "./Add";
 // const columns: ColumnsType<{ a: 1 }> = [
 //     {
 //       title: "id",
@@ -26,24 +22,8 @@ import Add from "./Add";
 
 const TableWrap = () => {
   const actionRef = useRef<ActionType>();
-  const [typeList, setTypeList] = useState<{ _id: string; typeName: string }[]>(
-    []
-  );
   const { token } = theme.useToken();
 
-  useEffect(() => {
-    ProductTypeControllerFindAll({ type: "product" }).then((res) => {
-      if (res.success) {
-        setTypeList(res.data);
-      }
-    });
-  }, []);
-  const valueEnum: Record<string, string> = {};
-  typeList.map((item) => {
-    valueEnum[item._id] = {
-      text: item.typeName,
-    };
-  });
   const columns: ProColumns[] = [
     {
       dataIndex: "index",
@@ -51,29 +31,41 @@ const TableWrap = () => {
       width: 48,
     },
     {
-      title: "文件名称",
+      title: "来源",
+      dataIndex: "origin",
+    },
+    {
+      title: "公司名称",
+      dataIndex: "companyName",
+    },
+    {
+      title: "姓名",
       dataIndex: "name",
     },
     {
-      title: "类别筛选",
-      dataIndex: "typeId",
-      hideInTable: true,
-      valueType: "select",
-      valueEnum,
+      title: "电话",
+      dataIndex: "tel",
     },
     {
-      title: "所属类别",
-      dataIndex: "typeName",
+      title: "了解类型",
+      dataIndex: "understandType",
       search: false,
-      render(selectText, record) {
-        const { productTitle } = record;
-        return `${selectText}${" "}>${" "}${productTitle}`;
-      },
+    },
+    {
+      title: "授权范围",
+      dataIndex: "scopeOfAuthority",
+      search: false,
     },
     {
       title: "更新时间",
       dataIndex: "updatedAt",
       valueType: "dateTime",
+      search: false,
+    },
+    {
+      title: "id",
+      dataIndex: "_id",
+      width: 30,
       search: false,
     },
     {
@@ -83,19 +75,18 @@ const TableWrap = () => {
       render: (text, record, _, action) => {
         const { url, _id } = record;
         return [
-          <a
-            type="link"
-            onClick={() => {
-              window.open(url);
-            }}
-          >
-            下载
-          </a>,
+          //   <Add
+          //     _id={record._id}
+          //     onFinishCallBack={async () => {
+          //       actionRef.current?.reload();
+          //     }}
+          //     trigger={<a type="link">编辑</a>}
+          //   ></Add>,
           <Popconfirm
             key={"delete"}
             title="确认是否删除？"
             onConfirm={async () => {
-              const res = await ProductAttachmentControllerRemove({ _id });
+              const res = await ContactUsControllerRemove({ _id });
               if (res.success) {
                 actionRef.current?.reload();
                 message.success(res.data);
@@ -118,7 +109,7 @@ const TableWrap = () => {
         actionRef={actionRef}
         cardBordered
         request={async (params, sort, filter) => {
-          return ProductAttachmentControllerFindAll(params).then((res) => {
+          return ContactUsControllerFindAll(params).then((res) => {
             return {
               success: res?.success,
               data: res?.data?.list,
@@ -146,19 +137,19 @@ const TableWrap = () => {
         //   pageSize: 10,
         // }}
         dateFormatter="string"
-        toolBarRender={() => [
-          <Add
-            onFinishCallBack={async () => {
-              actionRef.current?.reload();
-            }}
-            trigger={
-              <Button type="primary">
-                <PlusOutlined />
-                上传新的资料
-              </Button>
-            }
-          ></Add>,
-        ]}
+        // toolBarRender={() => [
+        //   <Add
+        //     onFinishCallBack={async () => {
+        //       actionRef.current?.reload();
+        //     }}
+        //     trigger={
+        //       <Button type="primary">
+        //         <PlusOutlined />
+        //         添加Ad
+        //       </Button>
+        //     }
+        //   ></Add>,
+        // ]}
       />
     </>
   );

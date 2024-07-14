@@ -1,6 +1,6 @@
 // https://umijs.org/config/
 import { defineConfig } from "@umijs/max";
-import env from "../src/env";
+import { address } from "../src/runtime";
 import defaultSettings from "./defaultSettings";
 import proxy from "./proxy";
 import routes from "./routes";
@@ -138,7 +138,7 @@ export default defineConfig({
   openAPI: [
     {
       requestLibPath: "import { request } from '@umijs/max'",
-      schemaPath: `${env.address}/api-json`,
+      schemaPath: `${address}/api-json`,
       projectName: "swagger",
     },
   ],

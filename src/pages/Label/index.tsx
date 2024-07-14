@@ -1,10 +1,10 @@
 import { PageContainer } from "@ant-design/pro-components";
 import { useModel } from "@umijs/max";
-import { Card, Popconfirm, Tag, message, theme } from "antd";
-import React, { useState } from "react";
+import { Card, Popconfirm, message, theme } from "antd";
+import React from "react";
 
-import { ProductControllerFindAll } from "@/services/swagger/ProductControllerFindAll";
-import { ProductControllerRemove } from "@/services/swagger/ProductControllerRemove";
+import { LabelControllerFindAll } from "@/services/swagger/LabelControllerFindAll";
+import { LabelControllerRemove } from "@/services/swagger/LabelControllerRemove";
 import { PlusOutlined } from "@ant-design/icons";
 import type { ActionType, ProColumns } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
@@ -25,9 +25,6 @@ import Add from "./Add";
 
 const TableWrap = () => {
   const actionRef = useRef<ActionType>();
-  const [typeList, setTypeList] = useState<{ _id: string; typeName: string }[]>(
-    []
-  );
   const { token } = theme.useToken();
 
   const columns: ProColumns[] = [
@@ -37,35 +34,9 @@ const TableWrap = () => {
       width: 48,
     },
     {
-      title: "标题",
+      title: "标签名称",
       dataIndex: "title",
-    },
-    {
-      title: "类型",
-      dataIndex: "type",
-      render(text) {
-        return text.map((item) => <Tag>{item.title}</Tag>);
-      },
-      search: false,
-    },
-    {
-      title: "描述",
-      dataIndex: "description",
-      search: false,
-    },
-    {
-      title: "标签",
-      dataIndex: "label",
-      render(text) {
-        return text.map((item) => <Tag>{item.title}</Tag>);
-      },
-      search: false,
-    },
-    {
-      title: "主图",
-      dataIndex: "mainPictureUrl",
-      valueType: "image",
-      search: false,
+      valueType: "text",
     },
     {
       title: "更新时间",
@@ -74,25 +45,19 @@ const TableWrap = () => {
       search: false,
     },
     {
+      title: "id",
+      dataIndex: "_id",
+      width: 30,
+      search: false,
+    },
+    {
       title: "操作",
       valueType: "option",
       key: "option",
       render: (text, record, _, action) => {
-        const { _id } = record;
+        const { url, _id } = record;
         return [
           <Add
-            typeList={typeList}
-            key="look"
-            readonly={true}
-            _id={record._id}
-            onFinishCallBack={async () => {
-              actionRef.current?.reload();
-            }}
-            trigger={<a type="link">查看</a>}
-          ></Add>,
-          <Add
-            typeList={typeList}
-            key="editor"
             _id={record._id}
             onFinishCallBack={async () => {
               actionRef.current?.reload();
@@ -103,7 +68,7 @@ const TableWrap = () => {
             key={"delete"}
             title="确认是否删除？"
             onConfirm={async () => {
-              const res = await ProductControllerRemove({ _id });
+              const res = await LabelControllerRemove({ _id });
               if (res.success) {
                 actionRef.current?.reload();
                 message.success(res.data);
@@ -114,14 +79,6 @@ const TableWrap = () => {
           >
             <a style={{ color: token.colorErrorText }}>删除</a>
           </Popconfirm>,
-          // <TableDropdown
-          //   key="actionGroup"
-          //   onSelect={() => action?.reload()}
-          //   menus={[
-          //     { key: "copy", name: "复制" },
-          //     { key: "delete", name: "删除" },
-          //   ]}
-          // />,
         ];
       },
     },
@@ -134,7 +91,7 @@ const TableWrap = () => {
         actionRef={actionRef}
         cardBordered
         request={async (params, sort, filter) => {
-          return ProductControllerFindAll(params).then((res) => {
+          return LabelControllerFindAll(params).then((res) => {
             return {
               success: res?.success,
               data: res?.data?.list,
@@ -164,14 +121,13 @@ const TableWrap = () => {
         dateFormatter="string"
         toolBarRender={() => [
           <Add
-            typeList={typeList}
             onFinishCallBack={async () => {
               actionRef.current?.reload();
             }}
             trigger={
               <Button type="primary">
                 <PlusOutlined />
-                添加产品
+                添加标签
               </Button>
             }
           ></Add>,

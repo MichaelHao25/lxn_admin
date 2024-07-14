@@ -10,7 +10,7 @@ export async function NewsControllerUpdate(
   options?: { [key: string]: any },
 ) {
   const { _id: param0, ...queryParams } = params;
-  return request<Record<string, any>>(`/api/v1/news/${param0}`, {
+  return request<any>(`/api/v1/news/${param0}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

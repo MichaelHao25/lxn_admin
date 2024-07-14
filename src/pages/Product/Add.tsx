@@ -1,11 +1,13 @@
-import HtmlEditor from "@/components/HtmlEditor";
 import { getUploadProps, getUrl } from "@/components/UploadWrapper";
-import { ProductListControllerCreate } from "@/services/swagger/ProductListControllerCreate";
-import { ProductListControllerFindOne } from "@/services/swagger/ProductListControllerFindOne";
-import { ProductListControllerUpdate } from "@/services/swagger/ProductListControllerUpdate";
+import { LabelControllerFindAll } from "@/services/swagger/LabelControllerFindAll";
+import { ProductControllerCreate } from "@/services/swagger/ProductControllerCreate";
+import { ProductControllerFindOne } from "@/services/swagger/ProductControllerFindOne";
+import { ProductControllerUpdate } from "@/services/swagger/ProductControllerUpdate";
+import { TypeControllerFindAll } from "@/services/swagger/TypeControllerFindAll";
 import {
   ModalForm,
   ModalFormProps,
+  ProFormDateRangePicker,
   ProFormDigit,
   ProFormSelect,
   ProFormText,
@@ -17,7 +19,7 @@ import { useForm } from "antd/es/form/Form";
 import { RcFile } from "antd/es/upload";
 import { useEffect, useState } from "react";
 
-const getBase64 = (file: RcFile): Promise<string> =>
+export const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -49,95 +51,131 @@ export default (props: IAdd) => {
   };
 
   const handleCancel = () => setPreviewOpen(false);
-  const onFinish = async (res) => {
-    const { banner, description, details, mainPicture, title, typeId, order } =
-      res;
-    const mainPictureUrl = getUrl(mainPicture[0]);
-    const bannerUrl = banner.map((item) => getUrl(item));
-    if (bannerUrl && mainPictureUrl.length !== 0) {
-      const res = await new Promise(async (resolve) => {
-        const body = {
-          description,
-          details,
-          title,
-          typeId,
-          mainPicture: mainPictureUrl,
-          banner: bannerUrl,
-          order,
-        };
-        if (_id) {
-          if (props.readonly !== true) {
-            const res = await ProductListControllerUpdate({ _id }, body);
-            return resolve(res);
-          } else {
-            return resolve({ success: true });
-          }
-        } else {
-          const res = await ProductListControllerCreate(body);
+  const onFinish = async (data) => {
+    debugger;
+    const {
+      title,
+      description,
+      mainPictureUrl,
+      releaseDate,
+      type,
+      label,
+      totalEpisodes,
+      duration,
+      videoDirection,
+      authorizationInformation_property,
+      authorizationInformation_firstLaunchPlatform,
+      authorizationInformation_scope,
+      authorizationInformation_monetizationMethods,
+      pilotVideoAddress,
+    } = data;
+    const body = {
+      mainPictureUrl: getUrl(mainPictureUrl[0]),
+      releaseDate_start: releaseDate[0],
+      releaseDate_end: releaseDate[1],
+      type,
+      label,
+      totalEpisodes,
+      duration,
+      videoDirection,
+      authorizationInformation_property,
+      authorizationInformation_firstLaunchPlatform,
+      authorizationInformation_scope,
+      authorizationInformation_monetizationMethods,
+      pilotVideoAddress,
+      title,
+      description,
+    };
+
+    const res = await new Promise(async (resolve) => {
+      if (_id) {
+        if (props.readonly !== true) {
+          const res = await ProductControllerUpdate({ _id }, body);
           return resolve(res);
+        } else {
+          return resolve({ success: true });
         }
-      });
-      if (res.success) {
-        onFinishCallBack && onFinishCallBack();
-        return true;
+      } else {
+        const res = await ProductControllerCreate(body);
+        return resolve(res);
       }
+    });
+    if (res.success) {
+      onFinishCallBack && onFinishCallBack();
+      return true;
     }
+
     message.error("未知错误");
     return false;
   };
   const onOpenChange: ModalFormProps["onOpenChange"] = (visible) => {
     if (_id && visible) {
-      ProductListControllerFindOne({ _id }).then((res) => {
+      ProductControllerFindOne({ _id }).then((res) => {
         console.log(res);
         // {
-        //     "_id": "659a71a219a452c2745a6277",
-        //     "typeId": "659582e4497348b515cfacb9",
-        //     "title": "1111",
-        //     "mainPicture": "http://127.0.0.1/api/v1/upload/659a719719a452c2745a6272",
-        //     "banner": [
-        //         "http://127.0.0.1/api/v1/upload/659a719a19a452c2745a6274"
+        //     "_id": "6693f2126a8475f32af36b5f",
+        //     "title": "名称",
+        //     "type": [
+        //         "66937f6d23ac4ad37e09ea11"
         //     ],
-        //     "description": "1",
-        //     "details": "1",
-        //     "updatedAt": "2024-01-07T09:40:50.482Z",
-        //     "createdAt": "2024-01-07T09:40:50.482Z",
-        //     "__v": 0
+        //     "label": [
+        //         "6693634f298001d4e33a8740",
+        //         "669362bad70d6e55db0abcde"
+        //     ],
+        //     "mainPictureUrl": "http://tb-service.oss-cn-zhangjiakou.aliyuncs.com/f6c92326b2c58863e867a0fa2046d6ab.png",
+        //     "description": "描述",
+        //     "totalEpisodes": 11,
+        //     "duration": 1,
+        //     "videoDirection": "视频方向",
+        //     "authorizationInformation_property": "独家",
+        //     "authorizationInformation_firstLaunchPlatform": 11,
+        //     "authorizationInformation_scope": "中国大陆",
+        //     "authorizationInformation_monetizationMethods": "仅用于付费短剧",
+        //     "pilotVideoAddress": "http://tb-service.oss-cn-zhangjiakou.aliyuncs.com/f6c92326b2c58863e867a0fa2046d6ab.png",
+        //     "updatedAt": "2024-07-14T15:43:14.109Z"
         // }
         const { success, data } = res;
         if (success && data) {
           const {
-            banner = [],
-            mainPicture,
+            mainPictureUrl,
+            releaseDate_start,
+            releaseDate_end,
+            type,
+            label,
+            totalEpisodes,
+            duration,
+            videoDirection,
+            authorizationInformation_property,
+            authorizationInformation_firstLaunchPlatform,
+            authorizationInformation_scope,
+            authorizationInformation_monetizationMethods,
+            pilotVideoAddress,
             title,
-            typeId,
             description,
-            details,
-            order,
           } = data;
-          console.log("details111", details);
 
           setInitialValues({
             title,
-            typeId,
-            banner: banner.map((item, index) => {
-              return {
-                uid: index,
-                name: item,
-                status: "done",
-                url: item,
-              };
-            }),
-            mainPicture: [
+            releaseDate: [releaseDate_start, releaseDate_end],
+            type,
+            label,
+            totalEpisodes,
+            duration,
+            videoDirection,
+            authorizationInformation_property,
+            authorizationInformation_firstLaunchPlatform,
+            authorizationInformation_scope,
+            authorizationInformation_monetizationMethods,
+            pilotVideoAddress,
+            mainPictureUrl: [
               {
                 uid: "1",
-                name: mainPicture,
+                name: mainPictureUrl,
                 status: "done",
-                url: mainPicture,
+                url: mainPictureUrl,
               },
             ],
             description,
-            details,
-            order,
           });
         }
         //   initialValues, setInitialValues
@@ -157,24 +195,50 @@ export default (props: IAdd) => {
       onFinish={onFinish}
       initialValues={initialValues}
     >
-      <ProFormText
-        rules={[{ required: true }]}
-        label={"产品名称"}
-        name={"title"}
-      />
-      <ProFormDigit label={"顺序(越大越靠前)"} name={"order"} />
+      <ProFormText rules={[{ required: true }]} label={"名称"} name={"title"} />
       <ProFormSelect
         rules={[{ required: true }]}
-        label={"产品类型"}
-        name={"typeId"}
+        label={"类型"}
+        name={"type"}
         showSearch
-        options={typeList.map((item) => {
-          return { value: item._id, label: item.typeName };
-        })}
+        fieldProps={{
+          mode: "multiple",
+        }}
+        request={(params) => {
+          const { keyWords } = params;
+          return TypeControllerFindAll({ title: keyWords }).then((res) => {
+            return res?.data?.list?.map((item) => {
+              return {
+                label: item.title,
+                value: item._id,
+              };
+            });
+          });
+        }}
+      />
+      <ProFormSelect
+        rules={[{ required: true }]}
+        label={"标签"}
+        name={"label"}
+        showSearch
+        fieldProps={{
+          mode: "multiple",
+        }}
+        request={(params) => {
+          const { keyWords } = params;
+          return LabelControllerFindAll({ title: keyWords }).then((res) => {
+            return res?.data?.list?.map((item) => {
+              return {
+                label: item.title,
+                value: item._id,
+              };
+            });
+          });
+        }}
       />
       <ProFormUploadButton
         rules={[{ required: true }]}
-        name="mainPicture"
+        name="mainPictureUrl"
         label="主图"
         max={1}
         fieldProps={{
@@ -183,33 +247,89 @@ export default (props: IAdd) => {
           onPreview: handlePreview,
         }}
       />
-      <ProFormUploadButton
-        rules={[{ required: true }]}
-        name="banner"
-        label="轮播图"
-        max={10}
-        fieldProps={{
-          ...getUploadProps(),
-          listType: "picture-card",
-          onPreview: handlePreview,
-        }}
-      />
       <ProFormTextArea
         rules={[{ required: true }]}
-        label="产品描述"
+        label="描述"
         name="description"
-      >
-        <HtmlEditor key="description" readonly={props.readonly} />
-      </ProFormTextArea>
-
-      <ProFormTextArea
+      />
+      {/* <ProFormTextArea
         rules={[{ required: true }]}
         required
-        label="产品详情"
+        label="详情"
         name="details"
       >
         <HtmlEditor key="details" readonly={props.readonly} />
-      </ProFormTextArea>
+      </ProFormTextArea> */}
+      <ProFormDateRangePicker
+        rules={[{ required: true }]}
+        required
+        label="上线时间"
+        name="releaseDate"
+      ></ProFormDateRangePicker>
+      <ProFormDigit
+        rules={[{ required: true }]}
+        required
+        label="总集数"
+        name="totalEpisodes"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
+      <ProFormDigit
+        rules={[{ required: true }]}
+        required
+        label="时长"
+        name="duration"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
+      <ProFormText
+        rules={[{ required: true }]}
+        label="视频方向"
+        name={"videoDirection"}
+      />
+      <ProFormSelect
+        rules={[{ required: true }]}
+        label="授权信息 - 授权性质"
+        name={"authorizationInformation_property"}
+        valueEnum={{
+          独家: "独家",
+          非独家: "非独家",
+          不限: "不限",
+        }}
+      />
+      <ProFormDigit
+        rules={[{ required: true }]}
+        min={0}
+        fieldProps={{ precision: 0 }}
+        label="授权信息 -- 首发平台"
+        name={"authorizationInformation_firstLaunchPlatform"}
+      />
+      <ProFormSelect
+        rules={[{ required: true }]}
+        label="授权信息 -- 范围"
+        name={"authorizationInformation_scope"}
+        valueEnum={{
+          中国大陆: "中国大陆",
+          "海外（含港澳台）": "海外（含港澳台）",
+          全球: "全球",
+          不限: "不限",
+        }}
+      />
+      <ProFormSelect
+        rules={[{ required: true }]}
+        label="授权信息 --变现方式"
+        name={"authorizationInformation_monetizationMethods"}
+        valueEnum={{
+          仅用于付费短剧: "仅用于付费短剧",
+          仅用于免费短剧: "仅用于免费短剧",
+          不限: "不限",
+        }}
+      />
+      <ProFormText
+        rules={[{ required: true }]}
+        label="试看地址"
+        name={"pilotVideoAddress"}
+      />
 
       <Modal
         open={previewOpen}

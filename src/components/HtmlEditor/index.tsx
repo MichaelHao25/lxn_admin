@@ -1,6 +1,6 @@
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
-import env from "@/env";
+import { address } from "@/runtime";
 import getToken from "@/utils/getToken";
 import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
@@ -33,7 +33,7 @@ export default (props: IHtmlEditor) => {
     },
     MENU_CONF: {
       uploadImage: {
-        server: `${env.address}/api/v1/upload`,
+        server: `${address}/api/v1/upload`,
         fileName: "file",
         headers: {
           [token.key]: token.value,
@@ -49,7 +49,7 @@ export default (props: IHtmlEditor) => {
         },
       },
       uploadVideo: {
-        server: `${env.address}/api/v1/upload`,
+        server: `${address}/api/v1/upload`,
         fileName: "file",
         headers: {
           [token.key]: token.value,

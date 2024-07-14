@@ -7,7 +7,7 @@ export async function UserControllerCreate(
   body: API.CreateUserDto,
   options?: { [key: string]: any },
 ) {
-  return request<Record<string, any>>('/api/v1/user/register', {
+  return request<any>('/api/v1/user/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

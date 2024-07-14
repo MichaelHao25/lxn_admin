@@ -1,3 +1,4 @@
+import { companyName } from "@/runtime";
 import { PageContainer } from "@ant-design/pro-components";
 import { useModel } from "@umijs/max";
 import { Card, theme } from "antd";
@@ -34,7 +35,7 @@ const Welcome: React.FC = () => {
               color: token.colorTextHeading,
             }}
           >
-            欢迎使用 泽连工控 后台管理系统
+            欢迎使用 {companyName} 后台管理系统
           </div>
           <p
             style={{

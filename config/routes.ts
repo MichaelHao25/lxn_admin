@@ -36,16 +36,41 @@ export default [
     component: "./Product",
   },
   {
-    path: "/file",
-    name: "资料管理",
-    icon: "LinkOutlined",
-    component: "./File",
-  },
-  {
     path: "/news",
     name: "新闻管理",
     icon: "StarOutlined",
     component: "./News",
+  },
+
+  {
+    path: "/feedback",
+    name: "用户反馈",
+    icon: "UserSwitchOutlined",
+    component: "./ContactUs",
+  },
+  {
+    path: "/type",
+    name: "类型管理",
+    icon: "RadarChartOutlined",
+    component: "./Type",
+  },
+  {
+    path: "/label",
+    name: "标签管理",
+    icon: "CodeSandboxOutlined",
+    component: "./Label",
+  },
+  {
+    path: "/ad",
+    name: "广告管理",
+    icon: "CodeSandboxOutlined",
+    component: "./Ad",
+  },
+  {
+    path: "/banner",
+    name: "轮播管理",
+    icon: "CodeSandboxOutlined",
+    component: "./Banner",
   },
   //   {
   //     path: "/upload",

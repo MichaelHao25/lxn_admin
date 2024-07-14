@@ -1,12 +1,13 @@
 import HtmlEditor from "@/components/HtmlEditor";
 import { getUploadProps, getUrl } from "@/components/UploadWrapper";
-import { NewsListControllerCreate } from "@/services/swagger/NewsListControllerCreate";
-import { NewsListControllerFindOne } from "@/services/swagger/NewsListControllerFindOne";
-import { NewsListControllerUpdate } from "@/services/swagger/NewsListControllerUpdate";
+import { LabelControllerFindAll } from "@/services/swagger/LabelControllerFindAll";
+import { NewsControllerCreate } from "@/services/swagger/NewsControllerCreate";
+import { NewsControllerFindOne } from "@/services/swagger/NewsControllerFindOne";
+import { NewsControllerUpdate } from "@/services/swagger/NewsControllerUpdate";
+import { TypeControllerFindAll } from "@/services/swagger/TypeControllerFindAll";
 import {
   ModalForm,
   ModalFormProps,
-  ProFormDigit,
   ProFormSelect,
   ProFormText,
   ProFormTextArea,
@@ -15,7 +16,7 @@ import {
 import { Modal, UploadFile, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { RcFile } from "antd/es/upload";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -49,52 +50,43 @@ export default (props: IAdd) => {
   };
 
   const handleCancel = () => setPreviewOpen(false);
-  const onFinish = async (res) => {
-    const {
-      detailsPicture,
-      description,
-      details,
-      mainPicture,
-      title,
-      typeId,
-      order,
-    } = res;
-    const mainPictureUrl = getUrl(mainPicture[0]);
-    const detailsPictureUrl = getUrl(detailsPicture[0]);
-    if (detailsPictureUrl && mainPictureUrl) {
-      const res = await new Promise(async (resolve) => {
-        const body = {
-          description,
-          details,
-          title,
-          typeId,
-          mainPicture: mainPictureUrl,
-          detailsPicture: detailsPictureUrl,
-          order,
-        };
-        if (_id) {
-          if (props.readonly !== true) {
-            const res = await NewsListControllerUpdate({ _id }, body);
-            return resolve(res);
-          } else {
-            return resolve({ success: true });
-          }
-        } else {
-          const res = await NewsListControllerCreate(body);
+  const onFinish = async (data) => {
+    const { description, details, mainPictureUrl, title, type, label } = data;
+
+    const res = await new Promise(async (resolve) => {
+      const body = {
+        description,
+        details,
+        title,
+        type,
+        label,
+        mainPictureUrl: getUrl(mainPictureUrl[0]),
+      };
+      if (_id) {
+        if (props.readonly !== true) {
+          const res = await NewsControllerUpdate({ _id }, body);
           return resolve(res);
+        } else {
+          return resolve({ success: true });
         }
-      });
-      if (res.success) {
-        onFinishCallBack && onFinishCallBack();
-        return true;
+      } else {
+        const res = await NewsControllerCreate(body);
+        return resolve(res);
       }
+    });
+    if (res.success) {
+      onFinishCallBack && onFinishCallBack();
+      return true;
     }
     message.error("未知错误");
     return false;
   };
   const onOpenChange: ModalFormProps["onOpenChange"] = (visible) => {
+    if (visible) {
+      form.resetFields();
+    }
     if (_id && visible) {
-      NewsListControllerFindOne({ _id }).then((res) => {
+      NewsControllerFindOne({ _id }).then((res) => {
         console.log(res);
         // {
         //     "_id": "659a71a219a452c2745a6277",
@@ -114,46 +106,40 @@ export default (props: IAdd) => {
         if (success && data) {
           const {
             detailsPicture,
-            mainPicture,
+            mainPictureUrl,
             title,
-            typeId,
+            type,
             description,
             details,
-            order,
+            label,
           } = data;
-          console.log("details111", details);
 
-          setInitialValues({
-            title,
-            typeId,
-            detailsPicture: [
-              {
-                uid: "t1",
-                name: detailsPicture,
-                status: "done",
-                url: detailsPicture,
-              },
-            ],
-            mainPicture: [
-              {
-                uid: "1",
-                name: mainPicture,
-                status: "done",
-                url: mainPicture,
-              },
-            ],
-            description,
-            details,
-            order,
-          });
+          form.setFields([
+            { name: "title", value: title },
+            { name: "type", value: type },
+            { name: "label", value: label },
+            {
+              name: "mainPictureUrl",
+              value: [
+                {
+                  uid: "1",
+                  name: mainPictureUrl,
+                  status: "done",
+                  url: mainPictureUrl,
+                },
+              ],
+            },
+            { name: "description", value: description },
+            { name: "details", value: details },
+          ]);
         }
         //   initialValues, setInitialValues
       });
     }
   };
-  useEffect(() => {
-    form.resetFields();
-  }, [initialValues, form]);
+  //   useEffect(() => {
+  //     form.resetFields();
+  //   }, [initialValues, form]);
 
   return (
     <ModalForm
@@ -164,24 +150,47 @@ export default (props: IAdd) => {
       onFinish={onFinish}
       initialValues={initialValues}
     >
-      <ProFormText
-        rules={[{ required: true }]}
-        label={"产品名称"}
-        name={"title"}
-      />
-      <ProFormDigit label={"顺序(越大越靠前)"} name={"order"} />
+      <ProFormText rules={[{ required: true }]} label={"名称"} name={"title"} />
       <ProFormSelect
         rules={[{ required: true }]}
-        label={"产品类型"}
-        name={"typeId"}
+        label={"类型"}
+        name={"type"}
         showSearch
-        options={typeList.map((item) => {
-          return { value: item._id, label: item.typeName };
-        })}
+        request={(params) => {
+          const { keyWords } = params;
+          return TypeControllerFindAll({ title: keyWords }).then((res) => {
+            return res?.data?.list?.map((item) => {
+              return {
+                label: item.title,
+                value: item._id,
+              };
+            });
+          });
+        }}
+      />
+      <ProFormSelect
+        rules={[{ required: true }]}
+        label={"标签"}
+        name={"label"}
+        showSearch
+        fieldProps={{
+          mode: "multiple",
+        }}
+        request={(params) => {
+          const { keyWords } = params;
+          return LabelControllerFindAll({ title: keyWords }).then((res) => {
+            return res?.data?.list?.map((item) => {
+              return {
+                label: item.title,
+                value: item._id,
+              };
+            });
+          });
+        }}
       />
       <ProFormUploadButton
         rules={[{ required: true }]}
-        name="mainPicture"
+        name="mainPictureUrl"
         label="主图"
         max={1}
         fieldProps={{
@@ -190,27 +199,16 @@ export default (props: IAdd) => {
           onPreview: handlePreview,
         }}
       />
-      <ProFormUploadButton
-        rules={[{ required: true }]}
-        name="detailsPicture"
-        label="详情页顶图"
-        max={1}
-        fieldProps={{
-          ...getUploadProps(),
-          listType: "picture-card",
-          onPreview: handlePreview,
-        }}
-      />
       <ProFormTextArea
         rules={[{ required: true }]}
-        label="产品描述"
+        label="描述"
         name="description"
       />
 
       <ProFormTextArea
         rules={[{ required: true }]}
         required
-        label="产品详情"
+        label="详情"
         name="details"
       >
         <HtmlEditor key="details" readonly={props.readonly} />

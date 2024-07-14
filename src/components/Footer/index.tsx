@@ -1,3 +1,4 @@
+import { companyName } from "@/runtime";
 import { DefaultFooter } from "@ant-design/pro-components";
 import { useIntl } from "@umijs/max";
 import React from "react";
@@ -12,7 +13,7 @@ const Footer: React.FC = () => {
       style={{
         background: "none",
       }}
-      copyright={`${currentYear} 泽连工控`}
+      copyright={`${currentYear} ${companyName}`}
       //   links={[
       //     {
       //       key: "Ant Design Pro",
