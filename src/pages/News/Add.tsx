@@ -58,8 +58,13 @@ export default (props: IAdd) => {
         description,
         details,
         title,
-        type,
-        label,
+        type: typeof type === "object" ? type.value : type,
+        label: label.map((item) => {
+          if (typeof item === "string") {
+            return item;
+          }
+          return item.value;
+        }),
         mainPictureUrl: getUrl(mainPictureUrl[0]),
       };
       if (_id) {

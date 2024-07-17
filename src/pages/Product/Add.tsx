@@ -72,8 +72,18 @@ export default (props: IAdd) => {
       mainPictureUrl: getUrl(mainPictureUrl[0]),
       releaseDate_start: releaseDate[0],
       releaseDate_end: releaseDate[1],
-      type,
-      label,
+      type: type.map((item) => {
+        if (typeof item === "string") {
+          return item;
+        }
+        return item.value;
+      }),
+      label: label.map((item) => {
+        if (typeof item === "string") {
+          return item;
+        }
+        return item.value;
+      }),
       totalEpisodes,
       duration,
       videoDirection,
