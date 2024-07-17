@@ -1,7 +1,7 @@
 declare namespace API {
   type AdControllerFindAllParams = {
     /** Ad 类型 */
-    type?: 'Home_Ad_1' | 'Home_Ad_2';
+    type?: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'ContactUs_Ad_2' | 'About_Ad_1';
     /** 当前页 */
     current?: number;
     /** 每一页的数量 */
@@ -45,6 +45,12 @@ declare namespace API {
     _id?: string;
     /** 来源 */
     origin?: string;
+    /** 公司名称 */
+    companyName?: string;
+    /** 姓名 */
+    name?: string;
+    /** 电话 */
+    tel?: string;
     /** 当前页 */
     current?: number;
     /** 每一页的数量 */
@@ -65,15 +71,17 @@ declare namespace API {
 
   type CreateAdDto = {
     /** 类型 */
-    type: 'Home_Ad_1' | 'Home_Ad_2';
+    type: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'ContactUs_Ad_2' | 'About_Ad_1';
     /** 标题 */
     title: string;
     /** 描述 */
     description: string;
-    /** url */
-    url: string;
+    /** 图片地址 */
+    pictureUrl: string;
+    /** 跳转地址 */
+    gotoUrl: string;
     /** 背景颜色 只能是 */
-    backgroundColor?: string;
+    backgroundColor: string;
   };
 
   type CreateBannerDto = {
@@ -81,12 +89,13 @@ declare namespace API {
     type: 'Home_Banner_1' | 'Home_Banner_2';
     title?: string;
     description?: string;
-    url: string;
+    pictureUrl: string;
+    gotoUrl: string;
   };
 
   type CreateContactUsDto = {
     origin: string;
-    company: string;
+    companyName: string;
     name: string;
     tel: string;
     understandType: string;
@@ -105,24 +114,15 @@ declare namespace API {
     /** 产品标题 */
     title: string;
     /** 产品主图 */
-    mainPicture: string;
+    mainPictureUrl: string;
     /** 产品描述 */
     description: string;
     /** 产品详情 */
     details: string;
   };
 
-  type CreatePageDto = {};
-
-  type CreateProductAttachmentDto = {
-    /** 附件名称 */
-    name: string;
-    /** 附件所属产品id */
-    product_id: string;
-    /** 附件下载地址 */
-    url: string;
-    /** 顺序(越大越靠前) */
-    order?: number;
+  type CreatePageDto = {
+    indexShowLabel: string[];
   };
 
   type CreateProductDto = {
@@ -133,21 +133,23 @@ declare namespace API {
     /** 产品标题 */
     title: string;
     /** 产品主图 */
-    mainPicture: string;
+    mainPictureUrl: string;
     /** 产品描述 */
     description: string;
     /** 上线时间 */
-    releaseDate: string;
+    releaseDate_start: string;
+    /** 上线时间 */
+    releaseDate_end: string;
     /** 总集数 */
-    totalEpisodes: string;
+    totalEpisodes: number;
     /** 时长 */
-    duration: string;
+    duration: number;
     /** 视频方向 */
     videoDirection: string;
     /** 授权信息 - 授权性质 */
     authorizationInformation_property: '独家' | '非独家' | '不限';
     /** 授权信息 -- 首发平台 */
-    authorizationInformation_firstLaunchPlatform: string;
+    authorizationInformation_firstLaunchPlatform: number;
     /** 授权信息 -- 范围 */
     authorizationInformation_scope: '中国大陆' | '海外（含港澳台）' | '全球' | '不限';
     /** 授权信息 -- 变现方式 */
@@ -226,21 +228,6 @@ declare namespace API {
     id: string;
   };
 
-  type ProductAttachmentControllerFindAllParams = {
-    /** 附件名称 */
-    name?: string;
-    /** 所属类型 id */
-    typeId?: string;
-    /** 当前页 */
-    current?: number;
-    /** 每一页的数量 */
-    pageSize?: number;
-  };
-
-  type ProductAttachmentControllerRemoveParams = {
-    _id: string;
-  };
-
   type ProductControllerFindAllParams = {
     /** 类型id */
     type?: string;
@@ -290,13 +277,15 @@ declare namespace API {
 
   type UpdateAdDto = {
     /** 类型 */
-    type?: 'Home_Ad_1' | 'Home_Ad_2';
+    type?: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'ContactUs_Ad_2' | 'About_Ad_1';
     /** 标题 */
     title?: string;
     /** 描述 */
     description?: string;
-    /** url */
-    url?: string;
+    /** 图片地址 */
+    pictureUrl?: string;
+    /** 跳转地址 */
+    gotoUrl?: string;
     /** 背景颜色 只能是 */
     backgroundColor?: string;
   };
@@ -306,12 +295,13 @@ declare namespace API {
     type?: 'Home_Banner_1' | 'Home_Banner_2';
     title?: string;
     description?: string;
-    url?: string;
+    pictureUrl?: string;
+    gotoUrl?: string;
   };
 
   type UpdateContactUsDto = {
     origin?: string;
-    company?: string;
+    companyName?: string;
     name?: string;
     tel?: string;
     understandType?: string;
@@ -330,7 +320,7 @@ declare namespace API {
     /** 产品标题 */
     title?: string;
     /** 产品主图 */
-    mainPicture?: string;
+    mainPictureUrl?: string;
     /** 产品描述 */
     description?: string;
     /** 产品详情 */
@@ -347,21 +337,23 @@ declare namespace API {
     /** 产品标题 */
     title?: string;
     /** 产品主图 */
-    mainPicture?: string;
+    mainPictureUrl?: string;
     /** 产品描述 */
     description?: string;
     /** 上线时间 */
-    releaseDate?: string;
+    releaseDate_start?: string;
+    /** 上线时间 */
+    releaseDate_end?: string;
     /** 总集数 */
-    totalEpisodes?: string;
+    totalEpisodes?: number;
     /** 时长 */
-    duration?: string;
+    duration?: number;
     /** 视频方向 */
     videoDirection?: string;
     /** 授权信息 - 授权性质 */
     authorizationInformation_property?: '独家' | '非独家' | '不限';
     /** 授权信息 -- 首发平台 */
-    authorizationInformation_firstLaunchPlatform?: string;
+    authorizationInformation_firstLaunchPlatform?: number;
     /** 授权信息 -- 范围 */
     authorizationInformation_scope?: '中国大陆' | '海外（含港澳台）' | '全球' | '不限';
     /** 授权信息 -- 变现方式 */

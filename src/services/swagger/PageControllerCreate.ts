@@ -7,7 +7,7 @@ export async function PageControllerCreate(
   body: API.CreatePageDto,
   options?: { [key: string]: any },
 ) {
-  return request<string>('/api/v1/page', {
+  return request<any>('/api/v1/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

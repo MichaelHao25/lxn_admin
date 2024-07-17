@@ -6,8 +6,8 @@ import axios, {
   type AxiosRequestConfig,
   type AxiosResponse,
   type AxiosError,
-} from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/axios@0.27.2/node_modules/axios';
-import useUmiRequest, { UseRequestProvider } from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/@ahooksjs+use-request@2.8.15_react@18.2.0/node_modules/@ahooksjs/use-request';
+} from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/axios@0.27.2/node_modules/axios';
+import useUmiRequest, { UseRequestProvider } from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/@ahooksjs+use-request@2.8.15_react@18.2.0/node_modules/@ahooksjs/use-request';
 import { ApplyPluginsType } from 'umi';
 import { getPluginManager } from '../core/plugin';
 
@@ -26,7 +26,7 @@ import {
   PaginatedOptionsWithFormat,
   PaginatedParams,
   PaginatedResult,
-} from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/@ahooksjs+use-request@2.8.15_react@18.2.0/node_modules/@ahooksjs/use-request/es/types';
+} from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/@ahooksjs+use-request@2.8.15_react@18.2.0/node_modules/@ahooksjs/use-request/es/types';
 
 type ResultWithData< T = any > = { data?: T; [key: string]: any };
 

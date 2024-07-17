@@ -116,8 +116,13 @@ export default (props: IAdd) => {
 
           form.setFields([
             { name: "title", value: title },
-            { name: "type", value: type },
-            { name: "label", value: label },
+            { name: "type", value: { label: type.title, value: type._id } },
+            {
+              name: "label",
+              value: label.map((item) => {
+                return { label: item.title, value: item._id };
+              }),
+            },
             {
               name: "mainPictureUrl",
               value: [
@@ -156,6 +161,7 @@ export default (props: IAdd) => {
         label={"类型"}
         name={"type"}
         showSearch
+        debounceTime={400}
         request={(params) => {
           const { keyWords } = params;
           return TypeControllerFindAll({ title: keyWords }).then((res) => {
@@ -173,6 +179,7 @@ export default (props: IAdd) => {
         label={"标签"}
         name={"label"}
         showSearch
+        debounceTime={400}
         fieldProps={{
           mode: "multiple",
         }}

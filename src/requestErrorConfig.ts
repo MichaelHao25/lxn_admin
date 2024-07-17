@@ -1,7 +1,7 @@
 ﻿import type { RequestOptions } from "@@/plugin-request/request";
 import type { RequestConfig } from "@umijs/max";
 import { message, notification } from "antd";
-import env from "./runtime";
+import { address } from "./runtime";
 import getToken from "./utils/getToken";
 
 // 错误处理方案： 错误类型
@@ -27,7 +27,7 @@ interface ResponseStructure {
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const errorConfig: RequestConfig = {
-  baseURL: env.address,
+  baseURL: address,
   // 错误处理： umi@3 的错误处理方案。
   errorConfig: {
     // 错误抛出

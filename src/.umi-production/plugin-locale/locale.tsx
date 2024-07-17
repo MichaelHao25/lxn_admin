@@ -4,9 +4,9 @@
 import React from 'react';
 import { ConfigProvider } from 'antd';
 
-import moment from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs';
-import '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/locale/en';
-import '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/locale/zh-cn';
+import moment from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs';
+import '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/locale/en';
+import '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/locale/zh-cn';
 import { RawIntlProvider, getLocale, getDirection , setIntl, getIntl, localeInfo, event, LANG_CHANGE_EVENT } from './localeExports';
 
 

@@ -1,10 +1,11 @@
 import { getUploadProps, getUrl } from "@/components/UploadWrapper";
-import { BannerControllerCreate } from "@/services/swagger/BannerControllerCreate";
-import { BannerControllerFindOne } from "@/services/swagger/BannerControllerFindOne";
-import { BannerControllerUpdate } from "@/services/swagger/BannerControllerUpdate";
+import { AdControllerCreate } from "@/services/swagger/AdControllerCreate";
+import { AdControllerFindOne } from "@/services/swagger/AdControllerFindOne";
+import { AdControllerUpdate } from "@/services/swagger/AdControllerUpdate";
 import {
   ModalForm,
   ModalFormProps,
+  ProFormColorPicker,
   ProFormSelect,
   ProFormText,
   ProFormUploadButton,
@@ -14,7 +15,7 @@ import { useForm } from "antd/es/form/Form";
 import { RcFile } from "antd/es/upload";
 import { useState } from "react";
 import { getBase64 } from "../Product/Add";
-import { IBannerType } from "./interface";
+import { IAdType } from "./interface";
 
 interface IAdd extends ModalFormProps {
   onFinishCallBack?: () => void;
@@ -39,13 +40,17 @@ export default (props: IAdd) => {
   const handleCancel = () => setPreviewOpen(false);
 
   const onFinish = async (data: unknown) => {
-    const { pictureUrl, type, title, description, gotoUrl } = data;
+    const { pictureUrl, backgroundColor, type, title, description, gotoUrl } =
+      data;
     const body: Partial<API.CreateAdDto> = {};
     if (pictureUrl) {
       body.pictureUrl = getUrl(pictureUrl[0]);
     }
     if (type) {
       body.type = type;
+    }
+    if (backgroundColor) {
+      body.backgroundColor = backgroundColor;
     }
     if (title) {
       body.title = title;
@@ -59,7 +64,7 @@ export default (props: IAdd) => {
 
     const res = await new Promise(async (resolve) => {
       if (_id) {
-        const res = await BannerControllerUpdate(
+        const res = await AdControllerUpdate(
           {
             _id,
           },
@@ -67,7 +72,7 @@ export default (props: IAdd) => {
         );
         resolve(res);
       } else {
-        const res = await BannerControllerCreate(body);
+        const res = await AdControllerCreate(body);
         resolve(res);
       }
     });
@@ -84,9 +89,16 @@ export default (props: IAdd) => {
       form.resetFields();
     }
     if (visible && _id) {
-      BannerControllerFindOne({ _id }).then((res) => {
+      AdControllerFindOne({ _id }).then((res) => {
         const {
-          data: { description, gotoUrl, pictureUrl, title, type },
+          data: {
+            backgroundColor,
+            description,
+            gotoUrl,
+            pictureUrl,
+            title,
+            type,
+          },
         } = res;
         form.setFields([
           {
@@ -100,6 +112,10 @@ export default (props: IAdd) => {
           {
             name: "title",
             value: title,
+          },
+          {
+            name: "backgroundColor",
+            value: backgroundColor,
           },
           {
             name: "gotoUrl",
@@ -133,7 +149,7 @@ export default (props: IAdd) => {
         label={"类型"}
         name={"type"}
         placeholder={"请选择位置"}
-        valueEnum={IBannerType}
+        valueEnum={IAdType}
       />
       <ProFormUploadButton
         rules={[{ required: true }]}
@@ -147,13 +163,13 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormText
-        rules={[{ required: false }]}
+        rules={[{ required: true }]}
         label={"标题"}
         name={"title"}
         placeholder={"请输入标题"}
       />
       <ProFormText
-        rules={[{ required: false }]}
+        rules={[{ required: true }]}
         label={"描述"}
         name={"description"}
         placeholder={"请输入描述"}
@@ -163,6 +179,11 @@ export default (props: IAdd) => {
         label={"跳转页面"}
         name={"gotoUrl"}
         placeholder={"跳转页面"}
+      />
+      <ProFormColorPicker
+        rules={[{ required: true }]}
+        name="backgroundColor"
+        label="背景颜色"
       />
       <Modal
         open={previewOpen}

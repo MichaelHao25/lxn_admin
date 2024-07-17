@@ -52,7 +52,6 @@ export default (props: IAdd) => {
 
   const handleCancel = () => setPreviewOpen(false);
   const onFinish = async (data) => {
-    debugger;
     const {
       title,
       description,
@@ -157,8 +156,12 @@ export default (props: IAdd) => {
           setInitialValues({
             title,
             releaseDate: [releaseDate_start, releaseDate_end],
-            type,
-            label,
+            type: type.map((item) => {
+              return { label: item.title, value: item._id };
+            }),
+            label: label.map((item) => {
+              return { label: item.title, value: item._id };
+            }),
             totalEpisodes,
             duration,
             videoDirection,
@@ -200,6 +203,7 @@ export default (props: IAdd) => {
         rules={[{ required: true }]}
         label={"类型"}
         name={"type"}
+        debounceTime={400}
         showSearch
         fieldProps={{
           mode: "multiple",
@@ -221,6 +225,7 @@ export default (props: IAdd) => {
         label={"标签"}
         name={"label"}
         showSearch
+        debounceTime={400}
         fieldProps={{
           mode: "multiple",
         }}

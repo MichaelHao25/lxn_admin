@@ -72,6 +72,12 @@ export default [
     icon: "CodeSandboxOutlined",
     component: "./Banner",
   },
+  {
+    path: "/indexConfig",
+    name: "首页信息配置",
+    icon: "CodeSandboxOutlined",
+    component: "./IndexConfig",
+  },
   //   {
   //     path: "/upload",
   //     name: "资源管理",

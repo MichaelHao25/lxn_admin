@@ -37,9 +37,6 @@ import * as LabelControllerCreate from './LabelControllerCreate';
 import * as LabelControllerFindOne from './LabelControllerFindOne';
 import * as LabelControllerRemove from './LabelControllerRemove';
 import * as LabelControllerUpdate from './LabelControllerUpdate';
-import * as ProductAttachmentControllerFindAll from './ProductAttachmentControllerFindAll';
-import * as ProductAttachmentControllerCreate from './ProductAttachmentControllerCreate';
-import * as ProductAttachmentControllerRemove from './ProductAttachmentControllerRemove';
 import * as NewsControllerFindAll from './NewsControllerFindAll';
 import * as NewsControllerCreate from './NewsControllerCreate';
 import * as NewsControllerFindOne from './NewsControllerFindOne';
@@ -50,6 +47,7 @@ import * as BannerControllerCreate from './BannerControllerCreate';
 import * as BannerControllerFindOne from './BannerControllerFindOne';
 import * as BannerControllerRemove from './BannerControllerRemove';
 import * as BannerControllerUpdate from './BannerControllerUpdate';
+import * as PageControllerFindConfig from './PageControllerFindConfig';
 import * as PageControllerCreate from './PageControllerCreate';
 import * as PageControllerFindAll from './PageControllerFindAll';
 import * as PageControllerFindOne from './PageControllerFindOne';
@@ -91,9 +89,6 @@ export default {
   LabelControllerFindOne,
   LabelControllerRemove,
   LabelControllerUpdate,
-  ProductAttachmentControllerFindAll,
-  ProductAttachmentControllerCreate,
-  ProductAttachmentControllerRemove,
   NewsControllerFindAll,
   NewsControllerCreate,
   NewsControllerFindOne,
@@ -104,6 +99,7 @@ export default {
   BannerControllerFindOne,
   BannerControllerRemove,
   BannerControllerUpdate,
+  PageControllerFindConfig,
   PageControllerCreate,
   PageControllerFindAll,
   PageControllerFindOne,

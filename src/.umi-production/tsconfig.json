@@ -19,7 +19,7 @@
         "src/.umi/*"
       ],
       "@umijs/max": [
-        "/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/umi@4.0.52_@babel+core@7.20.12_@types+node@18.14.0_@types+react@18.0.28_eslint@8.31.0_jest@29_prrw6igticx5el4tsb4rjri3fq/node_modules/umi"
+        "/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/umi@4.0.52_@babel+core@7.20.12_@types+node@18.14.0_@types+react@18.0.28_eslint@8.31.0_jest@29_prrw6igticx5el4tsb4rjri3fq/node_modules/umi"
       ],
       "@umijs/max/typings": [
         "src/.umi/typings"

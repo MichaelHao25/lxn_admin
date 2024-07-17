@@ -83,6 +83,7 @@ export default (props: IAdd) => {
         label={"父级类型"}
         name={"parent"}
         showSearch
+        debounceTime={400}
         request={(params) => {
           const { keyWords } = params;
           return TypeControllerFindAll({ title: keyWords }).then((res) => {

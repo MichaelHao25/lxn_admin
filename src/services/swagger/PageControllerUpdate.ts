@@ -10,7 +10,7 @@ export async function PageControllerUpdate(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<string>(`/api/v1/page/${param0}`, {
+  return request<any>(`/api/v1/page/${param0}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

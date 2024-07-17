@@ -5,11 +5,11 @@ import {
   createIntl,
   IntlShape,
   MessageDescriptor,
-} from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/react-intl@3.12.1_react@18.2.0/node_modules/react-intl';
+} from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/react-intl@3.12.1_react@18.2.0/node_modules/react-intl';
 import { getPluginManager } from '../core/plugin';
-import EventEmitter from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/event-emitter@0.3.5/node_modules/event-emitter';
+import EventEmitter from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/event-emitter@0.3.5/node_modules/event-emitter';
 // @ts-ignore
-import warning from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/warning@4.0.3/node_modules/warning';
+import warning from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/warning@4.0.3/node_modules/warning';
 
 export {
   createIntl,
@@ -34,7 +34,7 @@ export {
   defineMessages,
   injectIntl,
   useIntl,
-} from '/Users/blue/Stations/zeliangongkong/admin/node_modules/.pnpm/react-intl@3.12.1_react@18.2.0/node_modules/react-intl';
+} from '/Users/blue/Stations/lingxn/admin/node_modules/.pnpm/react-intl@3.12.1_react@18.2.0/node_modules/react-intl';
 
 let g_intl: IntlShape;
 
@@ -46,9 +46,9 @@ export const event = new EventEmitter();
 export const LANG_CHANGE_EVENT = Symbol('LANG_CHANGE');
 
 import enUS0 from 'antd/es/locale/en_US';
-import lang_enUS0 from "/Users/blue/Stations/zeliangongkong/admin/src/locales/en-US.ts";
+import lang_enUS0 from "/Users/blue/Stations/lingxn/admin/src/locales/en-US.ts";
 import zhCN0 from 'antd/es/locale/zh_CN';
-import lang_zhCN0 from "/Users/blue/Stations/zeliangongkong/admin/src/locales/zh-CN.ts";
+import lang_zhCN0 from "/Users/blue/Stations/lingxn/admin/src/locales/zh-CN.ts";
 
 export const localeInfo: {[key: string]: any} = {
   'en-US': {

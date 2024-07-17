@@ -9,7 +9,7 @@ export async function BannerControllerFindOne(
   options?: { [key: string]: any },
 ) {
   const { _id: param0, ...queryParams } = params;
-  return request<Record<string, any>>(`/api/v1/banner/${param0}`, {
+  return request<any>(`/api/v1/banner/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
