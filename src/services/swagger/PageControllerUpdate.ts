@@ -9,7 +9,7 @@ export async function PageControllerUpdate(
   body: API.UpdatePageDto,
   options?: { [key: string]: any },
 ) {
-  const { id: param0, ...queryParams } = params;
+  const { type: param0, ...queryParams } = params;
   return request<any>(`/api/v1/page/${param0}`, {
     method: 'PATCH',
     headers: {

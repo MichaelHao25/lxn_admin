@@ -47,12 +47,10 @@ import * as BannerControllerCreate from './BannerControllerCreate';
 import * as BannerControllerFindOne from './BannerControllerFindOne';
 import * as BannerControllerRemove from './BannerControllerRemove';
 import * as BannerControllerUpdate from './BannerControllerUpdate';
-import * as PageControllerFindConfig from './PageControllerFindConfig';
 import * as PageControllerCreate from './PageControllerCreate';
-import * as PageControllerFindAll from './PageControllerFindAll';
 import * as PageControllerFindOne from './PageControllerFindOne';
-import * as PageControllerRemove from './PageControllerRemove';
 import * as PageControllerUpdate from './PageControllerUpdate';
+import * as PageControllerRemove from './PageControllerRemove';
 export default {
   AppControllerGetHello,
   AdControllerFindAll,
@@ -99,10 +97,8 @@ export default {
   BannerControllerFindOne,
   BannerControllerRemove,
   BannerControllerUpdate,
-  PageControllerFindConfig,
   PageControllerCreate,
-  PageControllerFindAll,
   PageControllerFindOne,
-  PageControllerRemove,
   PageControllerUpdate,
+  PageControllerRemove,
 };

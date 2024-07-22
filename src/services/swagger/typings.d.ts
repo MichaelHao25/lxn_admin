@@ -1,7 +1,7 @@
 declare namespace API {
   type AdControllerFindAllParams = {
     /** Ad 类型 */
-    type?: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'ContactUs_Ad_2' | 'About_Ad_1';
+    type?: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'NEW_Ad_1' | 'NEW_Ad_2' | 'About_Ad_1';
     /** 当前页 */
     current?: number;
     /** 每一页的数量 */
@@ -71,7 +71,7 @@ declare namespace API {
 
   type CreateAdDto = {
     /** 类型 */
-    type: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'ContactUs_Ad_2' | 'About_Ad_1';
+    type: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'NEW_Ad_1' | 'NEW_Ad_2' | 'About_Ad_1';
     /** 标题 */
     title: string;
     /** 描述 */
@@ -122,7 +122,10 @@ declare namespace API {
   };
 
   type CreatePageDto = {
-    indexShowType: string[];
+    type: 0 | 1 | 2;
+    indexShowType?: string[];
+    defaultProductImage?: string;
+    defaultNewImage?: string;
   };
 
   type CreateProductDto = {
@@ -217,7 +220,7 @@ declare namespace API {
   };
 
   type PageControllerFindOneParams = {
-    id: string;
+    type: number;
   };
 
   type PageControllerRemoveParams = {
@@ -225,7 +228,7 @@ declare namespace API {
   };
 
   type PageControllerUpdateParams = {
-    id: string;
+    type: number;
   };
 
   type ProductControllerFindAllParams = {
@@ -283,7 +286,7 @@ declare namespace API {
 
   type UpdateAdDto = {
     /** 类型 */
-    type?: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'ContactUs_Ad_2' | 'About_Ad_1';
+    type?: 'Home_Ad_1' | 'Home_Ad_2' | 'ContactUs_Ad_1' | 'NEW_Ad_1' | 'NEW_Ad_2' | 'About_Ad_1';
     /** 标题 */
     title?: string;
     /** 描述 */
