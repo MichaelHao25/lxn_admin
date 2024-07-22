@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import { companyName } from "@/runtime";
 import { UserControllerLogin } from "@/services/swagger/UserControllerLogin";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import {
@@ -140,7 +141,7 @@ const Login: React.FC = () => {
             maxWidth: "75vw",
           }}
           logo={<img alt="logo" src="/admin/logo.png" />}
-          title="北京联泽工业控制有限责任公司"
+          title={companyName}
           subTitle={"欢迎访问后台管理系统👏"}
           initialValues={{
             autoLogin: true,

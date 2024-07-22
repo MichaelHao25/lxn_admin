@@ -122,7 +122,7 @@ declare namespace API {
   };
 
   type CreatePageDto = {
-    indexShowLabel: string[];
+    indexShowType: string[];
   };
 
   type CreateProductDto = {
@@ -141,11 +141,11 @@ declare namespace API {
     /** 上线时间 */
     releaseDate_end: string;
     /** 总集数 */
-    totalEpisodes: number;
+    totalEpisodes?: number;
     /** 时长 */
-    duration: number;
+    duration?: number;
     /** 视频方向 */
-    videoDirection: string;
+    videoDirection?: string;
     /** 授权信息 - 授权性质 */
     authorizationInformation_property: '独家' | '非独家' | '不限';
     /** 授权信息 -- 首发平台 */
@@ -235,6 +235,12 @@ declare namespace API {
     title?: string;
     /** 标签id */
     label?: string;
+    /** 上线时间 */
+    releaseDate?: string;
+    /** 授权性质 */
+    authorizationInformation_property?: '独家' | '非独家' | '不限';
+    /** 授权范围 */
+    authorizationInformation_scope?: '中国大陆' | '海外（含港澳台）' | '全球' | '不限';
     /** 当前页 */
     current?: number;
     /** 每一页的数量 */

@@ -78,6 +78,19 @@ export default [
     icon: "CodeSandboxOutlined",
     component: "./IndexConfig",
   },
+  {
+    path: "/defaultProductImgConfig",
+    name: "产品默认图片配置",
+    icon: "CodeSandboxOutlined",
+    component: "./DefaultProductImgConfig",
+  },
+  {
+    path: "/defaultNewImgConfig",
+    name: "新闻默认图片配置",
+    icon: "CodeSandboxOutlined",
+    component: "./DefaultNewImgConfig",
+  },
+
   //   {
   //     path: "/upload",
   //     name: "资源管理",

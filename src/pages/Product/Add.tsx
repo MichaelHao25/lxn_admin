@@ -282,7 +282,7 @@ export default (props: IAdd) => {
         name="releaseDate"
       ></ProFormDateRangePicker>
       <ProFormDigit
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         required
         label="总集数"
         name="totalEpisodes"
@@ -290,7 +290,7 @@ export default (props: IAdd) => {
         fieldProps={{ precision: 0 }}
       ></ProFormDigit>
       <ProFormDigit
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         required
         label="时长"
         name="duration"
@@ -298,7 +298,7 @@ export default (props: IAdd) => {
         fieldProps={{ precision: 0 }}
       ></ProFormDigit>
       <ProFormText
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label="视频方向"
         name={"videoDirection"}
       />
