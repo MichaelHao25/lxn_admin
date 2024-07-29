@@ -57,7 +57,6 @@ export default (props: IAdd) => {
       mainPictureUrl: mainPictureUrl ? getUrl(mainPictureUrl?.[0]) : undefined,
       releaseDate_start: releaseDate?.[0],
       releaseDate_end: releaseDate?.[1],
-
       type: type?.map((item) => {
         if (typeof item === "string") {
           return item;
@@ -139,6 +138,7 @@ export default (props: IAdd) => {
             title,
             description,
             level,
+            gameTheme,
             order,
           } = data;
 
@@ -170,6 +170,7 @@ export default (props: IAdd) => {
               },
             ],
             description,
+            gameTheme,
           });
         }
         //   initialValues, setInitialValues
@@ -337,6 +338,12 @@ export default (props: IAdd) => {
         min={0}
         fieldProps={{ precision: 0 }}
       ></ProFormDigit>
+      <ProFormText
+        rules={[{ required: false }]}
+        label="游戏主题"
+        tooltip="仅在游戏系下使用"
+        name="gameTheme"
+      ></ProFormText>
 
       <Modal
         open={previewOpen}

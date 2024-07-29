@@ -11,6 +11,6 @@ export default {
 // export const address = isDev()
 //   ? `http://127.0.0.1:3000`
 //   : `http://117.72.33.162:3000`;
-export const address = `http://117.72.33.162:3000`;
-// export const address = `http://127.0.0.1:3000`;
+// export const address = `http://117.72.33.162:3000`;
+export const address = `http://127.0.0.1:3000`;
 export const companyName = "领向鸟";
