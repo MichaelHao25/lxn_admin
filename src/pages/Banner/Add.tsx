@@ -5,6 +5,7 @@ import { BannerControllerUpdate } from "@/services/swagger/BannerControllerUpdat
 import {
   ModalForm,
   ModalFormProps,
+  ProFormDigit,
   ProFormSelect,
   ProFormText,
   ProFormUploadButton,
@@ -39,22 +40,10 @@ export default (props: IAdd) => {
   const handleCancel = () => setPreviewOpen(false);
 
   const onFinish = async (data: unknown) => {
-    const { pictureUrl, type, title, description, gotoUrl } = data;
-    const body: Partial<API.CreateAdDto> = {};
+    const { pictureUrl, ...attr } = data;
+    const body: Partial<API.CreateAdDto> = { ...attr };
     if (pictureUrl) {
       body.pictureUrl = getUrl(pictureUrl[0]);
-    }
-    if (type) {
-      body.type = type;
-    }
-    if (title) {
-      body.title = title;
-    }
-    if (description) {
-      body.description = description;
-    }
-    if (gotoUrl) {
-      body.gotoUrl = gotoUrl;
     }
 
     const res = await new Promise(async (resolve) => {
@@ -86,12 +75,16 @@ export default (props: IAdd) => {
     if (visible && _id) {
       BannerControllerFindOne({ _id }).then((res) => {
         const {
-          data: { description, gotoUrl, pictureUrl, title, type },
+          data: { description, order, gotoUrl, pictureUrl, title, type },
         } = res;
         form.setFields([
           {
             name: "description",
             value: description,
+          },
+          {
+            name: "order",
+            value: order,
           },
           {
             name: "type",
@@ -164,6 +157,14 @@ export default (props: IAdd) => {
         name={"gotoUrl"}
         placeholder={"跳转页面"}
       />
+      <ProFormDigit
+        rules={[{ required: false }]}
+        label="顺序"
+        name="order"
+        tooltip="越大越靠前"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
       <Modal
         open={previewOpen}
         title={previewTitle}

@@ -5,6 +5,7 @@ import { TypeControllerUpdate } from "@/services/swagger/TypeControllerUpdate";
 import {
   ModalForm,
   ModalFormProps,
+  ProFormDigit,
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-components";
@@ -19,10 +20,11 @@ export default (props: IAdd) => {
   const { onFinishCallBack, _id, ...modalForm } = props;
   const [form] = useForm();
   const onFinish = async (data: unknown) => {
-    const { title, parent } = data;
+    const { title, parent, order } = data;
     const body = {
       ...(title ? { title } : {}),
       ...(parent ? { parent } : {}),
+      ...(order ? { order } : {}),
     };
     if (title || parent) {
       const res = await new Promise(async (resolve) => {
@@ -54,7 +56,7 @@ export default (props: IAdd) => {
     if (visible && _id) {
       TypeControllerFindOne({ _id }).then((res) => {
         const {
-          data: { title, parent },
+          data: { title, parent, order },
         } = res;
         if (title) {
           if (parent) {
@@ -64,6 +66,10 @@ export default (props: IAdd) => {
             {
               name: "title",
               value: title,
+            },
+            {
+              name: "order",
+              value: order,
             },
           ]);
         }
@@ -103,6 +109,14 @@ export default (props: IAdd) => {
         name={"title"}
         placeholder={"请输入类型名称"}
       />
+      <ProFormDigit
+        rules={[{ required: false }]}
+        label="顺序"
+        name="order"
+        tooltip="越大越靠前"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
     </ModalForm>
   );
 };

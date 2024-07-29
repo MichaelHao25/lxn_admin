@@ -4,7 +4,7 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/user","layout":false,"id":"1"},"2":{"name":"login","path":"/user/login","parentId":"1","id":"2"},"3":{"path":"/welcome","name":"欢迎页面","icon":"smile","parentId":"ant-design-pro-layout","id":"3"},"4":{"path":"/product","name":"产品管理","icon":"ReconciliationOutlined","parentId":"ant-design-pro-layout","id":"4"},"5":{"path":"/news","name":"新闻管理","icon":"StarOutlined","parentId":"ant-design-pro-layout","id":"5"},"6":{"path":"/feedback","name":"用户反馈","icon":"UserSwitchOutlined","parentId":"ant-design-pro-layout","id":"6"},"7":{"path":"/type","name":"类型管理","icon":"RadarChartOutlined","parentId":"ant-design-pro-layout","id":"7"},"8":{"path":"/label","name":"标签管理","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"8"},"9":{"path":"/ad","name":"广告管理","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"9"},"10":{"path":"/banner","name":"轮播管理","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"10"},"11":{"path":"/indexConfig","name":"首页信息配置","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"11"},"12":{"path":"/","redirect":"/welcome","parentId":"ant-design-pro-layout","id":"12"},"13":{"path":"*","layout":false,"id":"13"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
+  const routes = {"1":{"path":"/user","layout":false,"id":"1"},"2":{"name":"login","path":"/user/login","parentId":"1","id":"2"},"3":{"path":"/welcome","name":"欢迎页面","icon":"smile","parentId":"ant-design-pro-layout","id":"3"},"4":{"path":"/product","name":"产品管理","icon":"ReconciliationOutlined","parentId":"ant-design-pro-layout","id":"4"},"5":{"path":"/news","name":"新闻管理","icon":"StarOutlined","parentId":"ant-design-pro-layout","id":"5"},"6":{"path":"/feedback","name":"用户反馈","icon":"UserSwitchOutlined","parentId":"ant-design-pro-layout","id":"6"},"7":{"path":"/type","name":"类型管理","icon":"RadarChartOutlined","parentId":"ant-design-pro-layout","id":"7"},"8":{"path":"/label","name":"标签管理","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"8"},"9":{"path":"/ad","name":"广告管理","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"9"},"10":{"path":"/banner","name":"轮播管理","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"10"},"11":{"path":"/indexConfig","name":"首页信息配置","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"11"},"12":{"path":"/defaultProductImgConfig","name":"产品默认图片配置","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"12"},"13":{"path":"/defaultNewImgConfig","name":"新闻默认图片配置","icon":"CodeSandboxOutlined","parentId":"ant-design-pro-layout","id":"13"},"14":{"path":"/","redirect":"/welcome","parentId":"ant-design-pro-layout","id":"14"},"15":{"path":"*","layout":false,"id":"15"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
   return {
     routes,
     routeComponents: {
@@ -19,8 +19,10 @@ export async function getRoutes() {
 '9': React.lazy(() => import(/* webpackChunkName: "p__Ad__index" */'@/pages/Ad/index.tsx')),
 '10': React.lazy(() => import(/* webpackChunkName: "p__Banner__index" */'@/pages/Banner/index.tsx')),
 '11': React.lazy(() => import(/* webpackChunkName: "p__IndexConfig__index" */'@/pages/IndexConfig/index.tsx')),
-'12': React.lazy(() => import( './EmptyRoute')),
-'13': React.lazy(() => import(/* webpackChunkName: "p__404" */'@/pages/404.tsx')),
+'12': React.lazy(() => import(/* webpackChunkName: "p__DefaultProductImgConfig__index" */'@/pages/DefaultProductImgConfig/index.tsx')),
+'13': React.lazy(() => import(/* webpackChunkName: "p__DefaultNewImgConfig__index" */'@/pages/DefaultNewImgConfig/index.tsx')),
+'14': React.lazy(() => import( './EmptyRoute')),
+'15': React.lazy(() => import(/* webpackChunkName: "p__404" */'@/pages/404.tsx')),
 'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "t__plugin-layout__Layout" */'/Users/blue/Stations/lingxn/admin/src/.umi-production/plugin-layout/Layout.tsx')),
 },
   };

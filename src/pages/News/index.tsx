@@ -41,7 +41,10 @@ const TableWrap = () => {
       title: "类型",
       dataIndex: "type",
       renderText(text) {
-        return text.title;
+        if (text) {
+          return text.title;
+        }
+        return "-";
       },
       search: false,
     },
@@ -54,7 +57,10 @@ const TableWrap = () => {
       title: "标签",
       dataIndex: "label",
       render(text) {
-        return text.map((item) => <Tag>{item.title}</Tag>);
+        if (text) {
+          return text.map((item) => <Tag>{item.title}</Tag>);
+        }
+        return "-";
       },
       search: false,
     },
@@ -68,6 +74,12 @@ const TableWrap = () => {
       title: "更新时间",
       dataIndex: "updatedAt",
       valueType: "dateTime",
+      search: false,
+    },
+    {
+      title: "order",
+      dataIndex: "order",
+      width: 10,
       search: false,
     },
     {

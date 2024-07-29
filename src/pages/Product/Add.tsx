@@ -52,48 +52,25 @@ export default (props: IAdd) => {
 
   const handleCancel = () => setPreviewOpen(false);
   const onFinish = async (data) => {
-    const {
-      title,
-      description,
-      mainPictureUrl,
-      releaseDate,
-      type,
-      label,
-      totalEpisodes,
-      duration,
-      videoDirection,
-      authorizationInformation_property,
-      authorizationInformation_firstLaunchPlatform,
-      authorizationInformation_scope,
-      authorizationInformation_monetizationMethods,
-      pilotVideoAddress,
-    } = data;
+    const { mainPictureUrl, releaseDate, type, label, ...attr } = data;
     const body = {
-      mainPictureUrl: getUrl(mainPictureUrl[0]),
-      releaseDate_start: releaseDate[0],
-      releaseDate_end: releaseDate[1],
-      type: type.map((item) => {
+      mainPictureUrl: mainPictureUrl ? getUrl(mainPictureUrl?.[0]) : undefined,
+      releaseDate_start: releaseDate?.[0],
+      releaseDate_end: releaseDate?.[1],
+
+      type: type?.map((item) => {
         if (typeof item === "string") {
           return item;
         }
         return item.value;
       }),
-      label: label.map((item) => {
+      label: label?.map((item) => {
         if (typeof item === "string") {
           return item;
         }
         return item.value;
       }),
-      totalEpisodes,
-      duration,
-      videoDirection,
-      authorizationInformation_property,
-      authorizationInformation_firstLaunchPlatform,
-      authorizationInformation_scope,
-      authorizationInformation_monetizationMethods,
-      pilotVideoAddress,
-      title,
-      description,
+      ...attr,
     };
 
     const res = await new Promise(async (resolve) => {
@@ -161,10 +138,14 @@ export default (props: IAdd) => {
             pilotVideoAddress,
             title,
             description,
+            level,
+            order,
           } = data;
 
           setInitialValues({
+            level,
             title,
+            order,
             releaseDate: [releaseDate_start, releaseDate_end],
             type: type.map((item) => {
               return { label: item.title, value: item._id };
@@ -208,9 +189,14 @@ export default (props: IAdd) => {
       onFinish={onFinish}
       initialValues={initialValues}
     >
-      <ProFormText rules={[{ required: true }]} label={"名称"} name={"title"} />
-      <ProFormSelect
+      <ProFormText
         rules={[{ required: true }]}
+        required
+        label={"名称"}
+        name={"title"}
+      />
+      <ProFormSelect
+        rules={[{ required: false }]}
         label={"类型"}
         name={"type"}
         debounceTime={400}
@@ -231,7 +217,7 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormSelect
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label={"标签"}
         name={"label"}
         showSearch
@@ -252,7 +238,7 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormUploadButton
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         name="mainPictureUrl"
         label="主图"
         max={1}
@@ -263,10 +249,11 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormTextArea
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label="描述"
         name="description"
       />
+      <ProFormText rules={[{ required: false }]} label="评级" name="level" />
       {/* <ProFormTextArea
         rules={[{ required: true }]}
         required
@@ -276,14 +263,12 @@ export default (props: IAdd) => {
         <HtmlEditor key="details" readonly={props.readonly} />
       </ProFormTextArea> */}
       <ProFormDateRangePicker
-        rules={[{ required: true }]}
-        required
+        rules={[{ required: false }]}
         label="上线时间"
         name="releaseDate"
       ></ProFormDateRangePicker>
       <ProFormDigit
         rules={[{ required: false }]}
-        required
         label="总集数"
         name="totalEpisodes"
         min={0}
@@ -291,7 +276,6 @@ export default (props: IAdd) => {
       ></ProFormDigit>
       <ProFormDigit
         rules={[{ required: false }]}
-        required
         label="时长"
         name="duration"
         min={0}
@@ -303,7 +287,7 @@ export default (props: IAdd) => {
         name={"videoDirection"}
       />
       <ProFormSelect
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label="授权信息 - 授权性质"
         name={"authorizationInformation_property"}
         valueEnum={{
@@ -313,14 +297,14 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormDigit
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         min={0}
         fieldProps={{ precision: 0 }}
         label="授权信息 -- 首发平台"
         name={"authorizationInformation_firstLaunchPlatform"}
       />
       <ProFormSelect
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label="授权信息 -- 范围"
         name={"authorizationInformation_scope"}
         valueEnum={{
@@ -331,7 +315,7 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormSelect
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label="授权信息 --变现方式"
         name={"authorizationInformation_monetizationMethods"}
         valueEnum={{
@@ -341,10 +325,18 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormText
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label="试看地址"
         name={"pilotVideoAddress"}
       />
+      <ProFormDigit
+        rules={[{ required: false }]}
+        label="顺序"
+        name="order"
+        tooltip="越大越靠前"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
 
       <Modal
         open={previewOpen}

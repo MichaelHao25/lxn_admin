@@ -1,82 +1,92 @@
+import { getUploadProps, getUrl } from "@/components/UploadWrapper";
 import { PageControllerCreate } from "@/services/swagger/PageControllerCreate";
-import { PageControllerFindConfig } from "@/services/swagger/PageControllerFindConfig";
-import { TypeControllerFindAll } from "@/services/swagger/TypeControllerFindAll";
+import { PageControllerFindOne } from "@/services/swagger/PageControllerFindOne";
 import {
   PageContainer,
   ProForm,
-  ProFormSelect,
+  ProFormUploadButton,
 } from "@ant-design/pro-components";
 import { useModel } from "@umijs/max";
-import { Card } from "antd";
+import { Card, Modal, UploadFile } from "antd";
 import { useForm } from "antd/es/form/Form";
+import { RcFile } from "antd/es/upload";
 import React, { useEffect, useState } from "react";
+import { IGlobalConfig } from "../interface";
+import { getBase64 } from "../Product/Add";
 
 const SortComponent = () => {
-  const [initialState, setInitialState] = useState();
-  useEffect(() => {
-    PageControllerFindConfig().then((res) => {
-      if (res?.data?.indexShowType) {
-        setInitialState({
-          indexShowType: res?.data?.indexShowType.map((item) => {
-            return { label: item.title, value: item._id };
-          }),
-        });
-      }
-    });
-  }, []);
-  useEffect(() => {
-    form.resetFields();
-  }, [initialState]);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   const [form] = useForm();
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
+    );
+  };
+  const handleCancel = () => setPreviewOpen(false);
+  useEffect(() => {
+    PageControllerFindOne({ type: IGlobalConfig.defaultNewImgConfig }).then(
+      (res) => {
+        if (res?.data?.indexShowType) {
+          form.setFieldValue("defaultNewImage", [
+            {
+              uid: "1",
+              name: res.data.defaultNewImage,
+              status: "done",
+              url: res.data.defaultNewImage,
+            },
+          ]);
+        }
+      }
+    );
+  }, []);
   const handleOnFinish = async (data) => {
-    const { indexShowType } = data;
-    if (indexShowType) {
+    const { defaultNewImage } = data;
+    if (defaultNewImage) {
       return PageControllerCreate({
-        indexShowType: indexShowType.map((item) => {
-          if (typeof item === "string") {
-            return item;
-          } else {
-            return item.value;
-          }
-        }),
+        type: IGlobalConfig.defaultNewImgConfig,
+        defaultNewImage: getUrl(defaultNewImage?.[0]),
       }).then((res) => {
-        setInitialState({
-          indexShowType: res.data.indexShowType.map((item) => {
-            return { label: item.title, value: item._id };
-          }),
-        });
+        form.setFieldValue("defaultNewImgConfig", [
+          {
+            uid: "1",
+            name: res.data.defaultNewImage,
+            status: "done",
+            url: res.data.defaultNewImage,
+          },
+        ]);
       });
     }
   };
   return (
     <div>
-      <ProForm
-        onFinish={handleOnFinish}
-        form={form}
-        initialValues={initialState}
-      >
-        <ProFormSelect
+      <ProForm onFinish={handleOnFinish} form={form}>
+        <ProFormUploadButton
           rules={[{ required: true }]}
-          label={"首页展示的类型顺序"}
-          name={"indexShowType"}
-          showSearch
-          debounceTime={400}
+          name="defaultNewImage"
+          label="主图"
+          max={1}
           fieldProps={{
-            mode: "multiple",
-          }}
-          request={(params) => {
-            const { keyWords } = params;
-            return TypeControllerFindAll({ title: keyWords }).then((res) => {
-              return res?.data?.list?.map((item) => {
-                return {
-                  label: item.title,
-                  value: item._id,
-                };
-              });
-            });
+            ...getUploadProps(),
+            listType: "picture-card",
+            onPreview: handlePreview,
           }}
         />
       </ProForm>
+      <Modal
+        open={previewOpen}
+        title={previewTitle}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <img style={{ width: "100%" }} src={previewImage} />
+      </Modal>
     </div>
   );
 };

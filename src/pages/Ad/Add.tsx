@@ -6,6 +6,7 @@ import {
   ModalForm,
   ModalFormProps,
   ProFormColorPicker,
+  ProFormDigit,
   ProFormSelect,
   ProFormText,
   ProFormUploadButton,
@@ -40,26 +41,10 @@ export default (props: IAdd) => {
   const handleCancel = () => setPreviewOpen(false);
 
   const onFinish = async (data: unknown) => {
-    const { pictureUrl, backgroundColor, type, title, description, gotoUrl } =
-      data;
-    const body: Partial<API.CreateAdDto> = {};
+    const { pictureUrl, ...attr } = data;
+    const body: Partial<API.CreateAdDto> = { ...attr };
     if (pictureUrl) {
       body.pictureUrl = getUrl(pictureUrl[0]);
-    }
-    if (type) {
-      body.type = type;
-    }
-    if (backgroundColor) {
-      body.backgroundColor = backgroundColor;
-    }
-    if (title) {
-      body.title = title;
-    }
-    if (description) {
-      body.description = description;
-    }
-    if (gotoUrl) {
-      body.gotoUrl = gotoUrl;
     }
 
     const res = await new Promise(async (resolve) => {
@@ -98,12 +83,17 @@ export default (props: IAdd) => {
             pictureUrl,
             title,
             type,
+            order,
           },
         } = res;
         form.setFields([
           {
             name: "description",
             value: description,
+          },
+          {
+            name: "order",
+            value: order,
           },
           {
             name: "type",
@@ -185,6 +175,14 @@ export default (props: IAdd) => {
         name="backgroundColor"
         label="背景颜色"
       />
+      <ProFormDigit
+        rules={[{ required: false }]}
+        label="顺序"
+        name="order"
+        tooltip="越大越靠前"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
       <Modal
         open={previewOpen}
         title={previewTitle}

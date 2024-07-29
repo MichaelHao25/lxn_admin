@@ -8,6 +8,7 @@ import { TypeControllerFindAll } from "@/services/swagger/TypeControllerFindAll"
 import {
   ModalForm,
   ModalFormProps,
+  ProFormDigit,
   ProFormSelect,
   ProFormText,
   ProFormTextArea,
@@ -51,21 +52,21 @@ export default (props: IAdd) => {
 
   const handleCancel = () => setPreviewOpen(false);
   const onFinish = async (data) => {
-    const { description, details, mainPictureUrl, title, type, label } = data;
+    const { mainPictureUrl, type, label, ...attr } = data;
 
     const res = await new Promise(async (resolve) => {
       const body = {
-        description,
-        details,
-        title,
+        ...attr,
         type: typeof type === "object" ? type.value : type,
-        label: label.map((item) => {
+        label: label?.map((item) => {
           if (typeof item === "string") {
             return item;
           }
           return item.value;
         }),
-        mainPictureUrl: getUrl(mainPictureUrl[0]),
+        mainPictureUrl: mainPictureUrl
+          ? getUrl(mainPictureUrl?.[0])
+          : undefined,
       };
       if (_id) {
         if (props.readonly !== true) {
@@ -110,18 +111,22 @@ export default (props: IAdd) => {
         const { success, data } = res;
         if (success && data) {
           const {
-            detailsPicture,
             mainPictureUrl,
             title,
             type,
             description,
             details,
             label,
+            order,
           } = data;
 
           form.setFields([
             { name: "title", value: title },
-            { name: "type", value: { label: type.title, value: type._id } },
+            { name: "order", value: order },
+            {
+              name: "type",
+              value: type ? { label: type.title, value: type._id } : undefined,
+            },
             {
               name: "label",
               value: label.map((item) => {
@@ -160,9 +165,14 @@ export default (props: IAdd) => {
       onFinish={onFinish}
       initialValues={initialValues}
     >
-      <ProFormText rules={[{ required: true }]} label={"名称"} name={"title"} />
-      <ProFormSelect
+      <ProFormText
         rules={[{ required: true }]}
+        required
+        label={"名称"}
+        name={"title"}
+      />
+      <ProFormSelect
+        rules={[{ required: false }]}
         label={"类型"}
         name={"type"}
         showSearch
@@ -180,7 +190,7 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormSelect
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label={"标签"}
         name={"label"}
         showSearch
@@ -201,7 +211,7 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormUploadButton
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         name="mainPictureUrl"
         label="主图"
         max={1}
@@ -212,20 +222,26 @@ export default (props: IAdd) => {
         }}
       />
       <ProFormTextArea
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
         label="描述"
         name="description"
       />
 
       <ProFormTextArea
-        rules={[{ required: true }]}
-        required
+        rules={[{ required: false }]}
         label="详情"
         name="details"
       >
         <HtmlEditor key="details" readonly={props.readonly} />
       </ProFormTextArea>
-
+      <ProFormDigit
+        rules={[{ required: false }]}
+        label="顺序"
+        name="order"
+        tooltip="越大越靠前"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
       <Modal
         open={previewOpen}
         title={previewTitle}

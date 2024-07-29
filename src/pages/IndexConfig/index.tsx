@@ -1,5 +1,5 @@
 import { PageControllerCreate } from "@/services/swagger/PageControllerCreate";
-import { PageControllerFindConfig } from "@/services/swagger/PageControllerFindConfig";
+import { PageControllerFindOne } from "@/services/swagger/PageControllerFindOne";
 import { TypeControllerFindAll } from "@/services/swagger/TypeControllerFindAll";
 import {
   PageContainer,
@@ -10,19 +10,22 @@ import { useModel } from "@umijs/max";
 import { Card } from "antd";
 import { useForm } from "antd/es/form/Form";
 import React, { useEffect, useState } from "react";
+import { IGlobalConfig } from "../interface";
 
 const SortComponent = () => {
   const [initialState, setInitialState] = useState();
   useEffect(() => {
-    PageControllerFindConfig().then((res) => {
-      if (res?.data?.indexShowType) {
-        setInitialState({
-          indexShowType: res?.data?.indexShowType.map((item) => {
-            return { label: item.title, value: item._id };
-          }),
-        });
+    PageControllerFindOne({ type: IGlobalConfig.indexSortConfig }).then(
+      (res) => {
+        if (res?.data?.indexShowType) {
+          setInitialState({
+            indexShowType: res?.data?.indexShowType.map((item) => {
+              return { label: item.title, value: item._id };
+            }),
+          });
+        }
       }
-    });
+    );
   }, []);
   useEffect(() => {
     form.resetFields();
@@ -32,6 +35,7 @@ const SortComponent = () => {
     const { indexShowType } = data;
     if (indexShowType) {
       return PageControllerCreate({
+        type: IGlobalConfig.indexSortConfig,
         indexShowType: indexShowType.map((item) => {
           if (typeof item === "string") {
             return item;

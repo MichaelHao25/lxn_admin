@@ -1,5 +1,3 @@
-import isDev from "./utils/isDev";
-
 export default {
   //   address: `http://59.110.32.43:3000`,
   //   address: `http://127.0.0.1:3000`,
@@ -10,8 +8,9 @@ export default {
   //   companyName: "领向鸟",
 };
 
-export const address = isDev()
-  ? `http://127.0.0.1:3000`
-  : `http://117.72.33.162:3000`;
+// export const address = isDev()
+//   ? `http://127.0.0.1:3000`
+//   : `http://117.72.33.162:3000`;
+export const address = `http://117.72.33.162:3000`;
 // export const address = `http://127.0.0.1:3000`;
 export const companyName = "领向鸟";

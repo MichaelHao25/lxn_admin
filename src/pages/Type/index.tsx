@@ -63,6 +63,12 @@ const TableWrap = () => {
       search: false,
     },
     {
+      title: "order",
+      dataIndex: "order",
+      width: 10,
+      search: false,
+    },
+    {
       title: "操作",
       valueType: "option",
       key: "option",

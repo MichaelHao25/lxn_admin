@@ -4,6 +4,7 @@ import { LabelControllerUpdate } from "@/services/swagger/LabelControllerUpdate"
 import {
   ModalForm,
   ModalFormProps,
+  ProFormDigit,
   ProFormText,
 } from "@ant-design/pro-components";
 import { message } from "antd";
@@ -17,29 +18,27 @@ export default (props: IAdd) => {
   const { onFinishCallBack, _id, ...modalForm } = props;
   const [form] = useForm();
   const onFinish = async (data: unknown) => {
-    const { title } = data;
-    if (title) {
-      const res = await new Promise(async (resolve) => {
-        if (_id) {
-          const res = await LabelControllerUpdate(
-            {
-              _id,
-            },
-            { title }
-          );
-          resolve(res);
-        } else {
-          const res = await LabelControllerCreate({
-            title,
-          });
-          resolve(res);
-        }
-      });
-      if (res.success) {
-        onFinishCallBack && onFinishCallBack();
-        return true;
+    const body = { ...data };
+
+    const res = await new Promise(async (resolve) => {
+      if (_id) {
+        const res = await LabelControllerUpdate(
+          {
+            _id,
+          },
+          body
+        );
+        resolve(res);
+      } else {
+        const res = await LabelControllerCreate(body);
+        resolve(res);
       }
+    });
+    if (res.success) {
+      onFinishCallBack && onFinishCallBack();
+      return true;
     }
+
     message.error("未知错误");
     return false;
   };
@@ -50,16 +49,18 @@ export default (props: IAdd) => {
     if (visible && _id) {
       LabelControllerFindOne({ _id }).then((res) => {
         const {
-          data: { title },
+          data: { title, order },
         } = res;
-        if (title) {
-          form.setFields([
-            {
-              name: "title",
-              value: title,
-            },
-          ]);
-        }
+        form.setFields([
+          {
+            name: "title",
+            value: title,
+          },
+          {
+            name: "order",
+            value: order,
+          },
+        ]);
       });
     }
   };
@@ -77,6 +78,14 @@ export default (props: IAdd) => {
         name={"title"}
         placeholder={"请输入标签名称"}
       />
+      <ProFormDigit
+        rules={[{ required: false }]}
+        label="顺序"
+        name="order"
+        tooltip="越大越靠前"
+        min={0}
+        fieldProps={{ precision: 0 }}
+      ></ProFormDigit>
     </ModalForm>
   );
 };
