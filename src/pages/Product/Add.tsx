@@ -268,20 +268,16 @@ export default (props: IAdd) => {
         label="上线时间"
         name="releaseDate"
       ></ProFormDateRangePicker>
-      <ProFormDigit
+      <ProFormText
         rules={[{ required: false }]}
         label="总集数"
         name="totalEpisodes"
-        min={0}
-        fieldProps={{ precision: 0 }}
-      ></ProFormDigit>
-      <ProFormDigit
+      ></ProFormText>
+      <ProFormText
         rules={[{ required: false }]}
         label="时长"
         name="duration"
-        min={0}
-        fieldProps={{ precision: 0 }}
-      ></ProFormDigit>
+      ></ProFormText>
       <ProFormText
         rules={[{ required: false }]}
         label="视频方向"
@@ -297,10 +293,8 @@ export default (props: IAdd) => {
           不限: "不限",
         }}
       />
-      <ProFormDigit
+      <ProFormText
         rules={[{ required: false }]}
-        min={0}
-        fieldProps={{ precision: 0 }}
         label="授权信息 -- 首发平台"
         name={"authorizationInformation_firstLaunchPlatform"}
       />
